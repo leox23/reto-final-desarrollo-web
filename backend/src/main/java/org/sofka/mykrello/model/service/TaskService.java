@@ -10,7 +10,9 @@ import org.sofka.mykrello.model.repository.LogRepository;
 import org.sofka.mykrello.model.repository.TaskRepository;
 import org.sofka.mykrello.model.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TaskService implements TaskServiceInterface {
@@ -22,16 +24,20 @@ public class TaskService implements TaskServiceInterface {
     private TaskRepository taskRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<TaskDomain> findAllTasksById(Integer idBoard) {
-        return taskRepository.findAllById(Collections.singleton(idBoard));
+        return  taskRepository.findAllById(Collections.singleton(idBoard));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TaskDomain findById(Integer id) {
-        return taskRepository.findById(id).orElse(null) ;
+        var task = taskRepository.findById(id);
+        return task.isPresent() ? task.get() : null;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TaskDomain create(TaskDomain task) {
         var tarea=taskRepository.save(task);
 

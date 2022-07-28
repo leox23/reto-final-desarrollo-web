@@ -45,7 +45,7 @@ public class BoardService implements BoardServiceInterface {
         if (!columns.isEmpty()) {
             columns.forEach(column -> {
                 var columnForBoard = new ColumnForBoardDomain();
-                columnForBoard.setColumn(column);
+                columnForBoard.setId_column(column);
                 columnForBoard.setBoard(newBoard);
                 columnForBoardRepository.save(columnForBoard);
             });
