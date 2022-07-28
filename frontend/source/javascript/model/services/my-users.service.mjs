@@ -1,5 +1,4 @@
 import { Config } from "../../config.mjs";
-import { UserModel } from "../user.model.mjs";
 
 export class MyUsersService {
 

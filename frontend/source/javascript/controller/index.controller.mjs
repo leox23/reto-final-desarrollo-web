@@ -4,23 +4,28 @@
 import { MyUsersService } from "../model/services/my-users.service.mjs";
 
 // Views
-import { IndexView } from "../view/index.view.mjs";
+import { IndexxView } from "../view/indexx.view.js";
+
+
 
 class IndexController {
-    #privateView;
-    #privateMyUsersService;
+    #View;
+    //#privateMyUsersService;
 
     constructor() {
-        const headerData = ['nombre', 'apellidos', 'correo', 'teléfono', 'creado', 'acciones'];
-        this.#privateView = new IndexView(headerData);
-        this.#privateMyUsersService = new MyUsersService();
+        //const headerData = ['nombre', 'apellidos', 'correo', 'teléfono', 'creado', 'acciones'];
+        //this.#privateView = new IndexView(headerData);
+        //this.#privateMyUsersService = new MyUsersService();
+        this.#View = new IndexxView();
     }
 
-    async init() {
+    init() {
+        /*
         this.#privateView.Data = await this.#privateMyUsersService.getUsers();
         this.#privateView.init();
+        */
+        this.#View.init();
     }
 }
-
 export const index = new IndexController();
 index.init();
