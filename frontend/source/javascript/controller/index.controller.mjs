@@ -1,31 +1,26 @@
 "use strict";
 
-// Services
-import { MyUsersService } from "../model/services/my-users.service.mjs";
+// Config
+import { Config } from "../config.mjs";
 
 // Views
-import { IndexxView } from "../view/indexx.view.js";
+import { IndexView } from "../view/index.view.mjs";
 
+// Models
 
+// Services
 
-class IndexController {
-    #View;
-    //#privateMyUsersService;
+export class RickController {
+    #privateView;
 
     constructor() {
-        //const headerData = ['nombre', 'apellidos', 'correo', 'teléfono', 'creado', 'acciones'];
-        //this.#privateView = new IndexView(headerData);
-        //this.#privateMyUsersService = new MyUsersService();
-        this.#View = new IndexxView();
+        this.#privateView = new IndexView();
     }
 
-    init() {
-        /*
-        this.#privateView.Data = await this.#privateMyUsersService.getUsers();
-        this.#privateView.init();
-        */
-        this.#View.init();
+    async init() {
+        this.#privateView.init("leonel");
     }
 }
-export const index = new IndexController();
+
+export const index = new RickController();
 index.init();

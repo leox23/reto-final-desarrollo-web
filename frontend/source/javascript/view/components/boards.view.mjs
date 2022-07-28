@@ -8,7 +8,7 @@ export class BoardsView {
     }
 
     #firstInflater(){
-        //this.container.innerHTML = "<p>LeonelMira</p>"
+        this.container.innerHTML = "<p>LeonelMira</p>"
     }
 
     init(){
