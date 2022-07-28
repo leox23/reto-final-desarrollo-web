@@ -47,5 +47,4 @@ public class LogDomain implements Serializable {
 
     @Column(name = "log_created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
-
 }
