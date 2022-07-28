@@ -1,14 +1,20 @@
 package org.sofka.mykrello.model.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 @Data
@@ -22,5 +28,9 @@ public class TaskDomain implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tsk_id", nullable = false)
     private Integer id;
+
+    @OneToMany(fetch = FetchType.LAZY, targetEntity = LogDomain.class, cascade = CascadeType.ALL, mappedBy = "task_id")
+    @JsonManagedReference(value = "task_id")
+    private List<LogDomain> log_task_id = new ArrayList<>();
 
 }
