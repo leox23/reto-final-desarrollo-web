@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./images/krello-logo.svg">
+    <title>Krello</title>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
@@ -12,113 +13,6 @@
 </head>
 
 <body>
-
-    <div id="container" class="container">
-
-
-        <!-- 
-/*
-######################################################################
-  vista column tasks 
-######################################################################
-*/
-        <div class="column-container bg-secondary bg-opacity-10 border rounded" style="width: 272px">
-
-            <div class="container d-flex flex-row justify-content-between p-2">
-                <h6 class="align-self-center m-0">Tareas pendientes</h6>
-                <button type="button" style="height:25px;padding:0px 6px;" class="btn btn-light align-self-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="15" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
-                    </svg>
-                </button>
-            </div>
-            
-            <div class="tasks-container p-2">
-
-                <div class="task bg-light bg-gradient border shadow-sm p-2 mb-1 rounded ">
-                    <p class="m-0">Estudio Control de versiones</p>
-                    <div class="deadline-date bg-danger bg-opacity-25 border d-flex rounded" style="padding: 0px 4px;width:fit-content;">
-                    
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-clock align-self-center" viewBox="0 0 16 16">
-                            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
-                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
-                          </svg>
-                        
-                        <p class="deadline-date-text" style="height:10px;padding-left: 6px;">4 de jul.</p>
-                    </div>
-                </div>
-
-
-
-                <div class="task bg-light bg-gradient border shadow-sm p-2 rounded mb-1">
-                    <p class="m-0">Pair programming</p><div class="deadline-date bg-success bg-opacity-25 border d-flex rounded" style="padding: 0px 4px;width:fit-content;">
-                    
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-clock align-self-center" viewBox="0 0 16 16">
-                            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
-                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
-                          </svg>
-                        
-                        <p class="deadline-date-text" style="height:10px;padding-left: 6px;">7 de jul.</p>
-                    </div>
-                </div>
-
-            <button href="#" class="btn btn-secondary m-2 d-flex justify-content-between align-items-center opacity-50">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                </svg>
-                <p class="m-0" style="padding-left:8px">Añada una tarjeta</p>
-        </button>
-        </div>
-
-        -->
-        <!--
-/*
-######################################################################
-  vista boards
-######################################################################
-*/
-
-            
-            <h1>Tableros</h1>
-        <p class="fs-6">Cantidad de tableros 1/1</p>
-
-        <div class="container d-flex flex-row bd-highlight">
-                <div id="container" class="boards-container">
-                <div class="card" style="width: 18rem;">
-                    <img src="https://images.pexels.com/photos/956999/milky-way-starry-sky-night-sky-star-956999.jpeg?cs=srgb&dl=pexels-felix-mittermeier-956999.jpg&fm=jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title align-self-center">Titulo de tableroooo</h5>
-                            
-                            <div class="dropdown">
-                                <button class="btn btn-ligth" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
-                                    </svg>
-                                </button>
-                                <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Editar nombre</a></li>
-                                <li><a class="dropdown-item" href="#">A Favoritos</a></li>
-                                <li><a class="dropdown-item" href="#">Eliminar</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <button class="btn btn-ligth align-self-center" style="margin-left:20px; height: auto;" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
-                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-                </svg>
-            </button>
-        </div>-->
-
-    </div>
-
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"

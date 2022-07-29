@@ -5,20 +5,24 @@ import { Config } from "../config.mjs";
 
 // Views
 import { IndexView } from "../view/index.view.mjs";
+import { Header } from "../view/components/header.view.mjs";
 
 // Models
 
 // Services
 
 export class RickController {
-    #privateView;
+    #indexView;
+    #header;
 
     constructor() {
-        this.#privateView = new IndexView();
+        this.#indexView = new IndexView();
+        this.#header = new Header();
     }
 
-    async init() {
-        this.#privateView.init("leonel");
+    init() {
+        this.#header.init()
+        this.#indexView.init();
     }
 }
 
