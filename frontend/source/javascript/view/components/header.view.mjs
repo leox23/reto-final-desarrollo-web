@@ -3,7 +3,6 @@
 export class Header {
     #logoPath;
     #body;
-    #contentContainer;
 
     constructor () {
         this.#logoPath = "./images/krello-logo.svg"

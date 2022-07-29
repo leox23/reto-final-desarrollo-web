@@ -1,5 +1,7 @@
 'use strict';
 
+import { Columns } from "../columns.view.mjs"; 
+
 export class BoardsView {
     #nodeBody;
 
@@ -11,10 +13,20 @@ export class BoardsView {
         const container = this.#createContainer()
         this.#nodeBody.append(container);
         container.innerHTML = this.#addBoards()
+        container.id = "container"
+        const board1 = document.querySelector(".board-container")
+        this.#addClickListener(board1)
     }
 
     #createContainer() {
         return document.createElement('div')
+    }
+
+    #addClickListener(node){
+        node.addEventListener('click', function() {
+            const columns = new Columns()
+            columns.init()
+        })
     }
 
     #addBoards() {
@@ -37,7 +49,7 @@ export class BoardsView {
             </svg>
         </button>
     
-            <div id="container" class="board-container me-4">
+        <div id="container" class="board-container me-4">
             <div class="card" style="width: 18rem;">
                 <img src="https://images.pexels.com/photos/956999/milky-way-starry-sky-night-sky-star-956999.jpeg?cs=srgb&dl=pexels-felix-mittermeier-956999.jpg&fm=jpg" class="card-img-top" alt="...">
                 <div class="card-body">
