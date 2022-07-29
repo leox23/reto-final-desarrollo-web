@@ -32,6 +32,14 @@ public class TaskController {
         response.data = taskService.findById(idtask);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping(path = "/api/v1/task_column/{id}/{idnext}")
+    public ResponseEntity<MyResponseUtility> moving(@PathVariable(value = "idnext") Integer idnext,
+                                                        @PathVariable(value = "id") Integer id) {
+        response.data = taskService.taskmoving(idnext,id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @PostMapping(path = "/api/v1/newTask/{idBoard}")
     public ResponseEntity<MyResponseUtility> create(@RequestBody TaskDomain task,@PathVariable(value = "idBoard")Integer idBoard) {
         response.data = taskService.create(task,idBoard);

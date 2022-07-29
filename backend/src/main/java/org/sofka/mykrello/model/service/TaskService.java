@@ -78,4 +78,20 @@ public class TaskService implements TaskServiceInterface {
         }
         return null;
     }
+
+    public TaskDomain taskmoving(Integer idnext, Integer id) {
+        var movingtask=taskRepository.findById(id);
+        if (movingtask!=null ){
+            var task=movingtask.get();
+            var newlog=new LogDomain();
+            newlog.setPrevious(task.getColumID());
+            task.setColumID(idnext);
+            taskRepository.save(task);
+            newlog.setCurrent(idnext);
+            newlog.setTask_id(task);
+            logService.create(newlog);
+            return task;
+        }
+        return null;
+    }
 }
