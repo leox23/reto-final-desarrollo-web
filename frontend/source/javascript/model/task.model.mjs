@@ -1,19 +1,19 @@
 export class Task {
-    #id;
+    id;
     //#idColumn; se relaciona solo en la base de datos?? 
     //#idBoard; se relaciona solo en la base de datos?? 
-    #name;
-    #description; 
-    #deliveryDate; 
-    #createdAt;
-    #updatedAt;
+    name;
+    description; 
+    deliveryDate; 
+    createdAt;
+    updatedAt;
 
     constructor(data){
         this.id = data.id;
         this.name = data.name;
         this.description = data.description;
         this.deliveryDate = data.deliveryDate;
-        this.#createdAt = data.createdAt;
+        this.createdAt = data.createdAt;
     }
 
     get Id() {

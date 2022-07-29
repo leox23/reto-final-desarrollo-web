@@ -1,14 +1,27 @@
 'use strict'
 
+import { DetailsModal } from "./components/datails.modal.view.mjs";
+
 export class Columns {
-     #container;
+      #container;
+      #modal;
 
      constructor() {
         this.#container = document.querySelector("#container")
+        this.#modal = new DetailsModal()
      }
 
      init(){
       this.#container.innerHTML = this.#addColumns()
+      this.#modal.init()
+      this.#addClickListener(".task")
+     }
+
+     #addClickListener(node) {
+         document.querySelector(node).addEventListener("click", function(){
+            const detailsModal = new DetailsModal();
+            detailsModal.showModal("hola dsde jajaj");
+         })
      }
 
      #addColumns(){
