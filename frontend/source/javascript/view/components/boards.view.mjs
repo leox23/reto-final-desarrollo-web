@@ -1,17 +1,17 @@
 'use strict';
 
 export class BoardsView {
-    #container;
+    #content;
 
     constructor() {
-        this.#container = document.querySelector('#container');
+        //this.#container = document.querySelector('#container');
     }
 
-    #firstInflater(){
-        this.container.innerHTML = "<p>LeonelMira</p>"
+    #boardHtml(){
+        return `<p>LeonelMira</p>`
     }
 
     init(){
-        this.#firstInflater()
+        return this.#boardHtml();
     }
 }
