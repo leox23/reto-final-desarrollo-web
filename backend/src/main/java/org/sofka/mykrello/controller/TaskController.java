@@ -1,6 +1,7 @@
 package org.sofka.mykrello.controller;
 
 import org.sofka.mykrello.model.domain.BoardDomain;
+import org.sofka.mykrello.model.domain.TaskDomain;
 import org.sofka.mykrello.model.service.BoardService;
 import org.sofka.mykrello.model.service.TaskService;
 import org.sofka.mykrello.utilities.MyResponseUtility;
@@ -26,35 +27,26 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @GetMapping(path = "/api/v1/tasks/{idBoard}")
-    public ResponseEntity<MyResponseUtility> getTasks(@PathVariable(value = "idBoard") Integer id) {
-        response.data = taskService.findAllTasksById(id);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
     @GetMapping(path = "/api/v1/task/{id}")
     public ResponseEntity<MyResponseUtility> gettaskById(@PathVariable(value = "id") Integer idtask) {
         response.data = taskService.findById(idtask);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-/*
-    @PostMapping(path = "/api/v1/board")
-    public ResponseEntity<MyResponseUtility> create(@RequestBody BoardDomain board) {
-        response.data = taskService.create(board);
+    @PostMapping(path = "/api/v1/newTask/{idBoard}")
+    public ResponseEntity<MyResponseUtility> create(@RequestBody TaskDomain task,@PathVariable(value = "idBoard")Integer idBoard) {
+        response.data = taskService.create(task,idBoard);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping(path = "/api/v1/board/{id}")
-    public ResponseEntity<MyResponseUtility> put(@PathVariable(value = "id") Integer id,
-                                                 @RequestBody BoardDomain board) {
-        response.data = taskService.update(id, board);
+    @PutMapping(path = "/api/v1/updateTask/{id}")
+    public ResponseEntity<MyResponseUtility> put(@PathVariable(value = "id") Integer id, @RequestBody TaskDomain task) {
+        response.data = taskService.update(id, task);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @DeleteMapping(path = "/api/v1/board/{id}")
+    @DeleteMapping(path = "/api/v1/deleteTask/{id}")
     public ResponseEntity<MyResponseUtility> delete(@PathVariable(value = "id") Integer id) {
         response.data = taskService.delete(id);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }*/
-
+    }
 }

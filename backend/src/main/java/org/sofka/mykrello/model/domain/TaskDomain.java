@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -36,11 +34,13 @@ public class TaskDomain implements Serializable {
     private Integer id;
 
 
-
     @Column(name = "tsk_name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "tsk_description", nullable = false, length = 2000)
+    @Column(name = "clm_id_column",nullable = false)
+    private Integer columID=1;
+
+    @Column(name = "tsk_description",  length = 2000)
     private String description;
 
     @Column(name = "tsk_delivery_date")
@@ -52,12 +52,13 @@ public class TaskDomain implements Serializable {
     @Column(name = "tsk_updated_at")
     private Instant updated_at;
 
+    @Column(name = "brd_id_board")
+    private Integer board_id;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-    @JoinColumn(name = "clm_id_column", referencedColumnName = "clm_id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "clm_id_column", referencedColumnName = "clm_id", nullable = false,insertable = false,updatable = false)
     @JsonBackReference("task_column")
     private ColumnDomain column;
-
 
     @OneToMany(fetch = FetchType.LAZY, targetEntity = LogDomain.class, cascade = CascadeType.ALL, mappedBy = "task_id")
     @JsonManagedReference(value = "task_id")

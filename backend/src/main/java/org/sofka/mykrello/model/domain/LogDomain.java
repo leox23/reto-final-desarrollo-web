@@ -30,20 +30,18 @@ public class LogDomain implements Serializable {
     @Column(name = "log_id", nullable = false, updatable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = ColumnDomain.class, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "clm_id_previous", nullable = false, updatable = false)
-    @JsonBackReference(value = "logPrevious")
-    private ColumnDomain previous;
+    @Column(name = "clm_id_current")
+    private Integer current=1;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = ColumnDomain.class, optional = false, cascade = CascadeType.DETACH)
-    @JoinColumn(name = "tsk_id_task", nullable = false, updatable = false)
+    @Column(name = "clm_id_previous")
+    private Integer previous=1;
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = TaskDomain.class, optional = false, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "tsk_id_task", nullable = false)
     @JsonBackReference(value = "task_id")
     private TaskDomain task_id;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = ColumnDomain.class, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "clm_id_current", nullable = false, updatable = false)
-    @JsonBackReference(value = "logCurrent")
-    private ColumnDomain current;
+
 
     @Column(name = "log_created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();

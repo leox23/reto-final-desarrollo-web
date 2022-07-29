@@ -23,7 +23,6 @@ public class LogService implements LogServiceInterface {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public LogDomain create(LogDomain log) {
         return logRepository.save(log);
     }

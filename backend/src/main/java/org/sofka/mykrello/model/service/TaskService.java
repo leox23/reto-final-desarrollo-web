@@ -1,7 +1,9 @@
 package org.sofka.mykrello.model.service;
 
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.sofka.mykrello.model.domain.ColumnDomain;
 import org.sofka.mykrello.model.domain.LogDomain;
@@ -37,26 +39,34 @@ public class TaskService implements TaskServiceInterface {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public TaskDomain create(TaskDomain task) {
-        var tarea=taskRepository.save(task);
-
-        var columna = new ColumnDomain();
-        columna.setId(1);
-
+    public TaskDomain create(TaskDomain task,Integer idboard) {
+        task.setColumID(1);
+        task.setBoard_id(idboard);
         var log=new LogDomain();
-        log.setCurrent(columna);
-        log.setPrevious(columna);
-        log.setTask_id(tarea);
-
+        var newtask=taskRepository.save(task);
+        log.setTask_id(newtask);
         logService.create(log);
-        return (tarea);
+        return newtask;
     }
 
     @Override
     public TaskDomain update(Integer id, TaskDomain task) {
+        var  taskAntigua=taskRepository.findById(id).get();
         task.setId(id);
-        return taskRepository.save(task);
+        if (task.getName() !=null){
+            String nombre=task.getName();
+            taskAntigua.setName(nombre);
+        }
+        if (task.getDescription() !=null){
+            String description=task.getDescription();
+            taskAntigua.setDescription(description);
+        }
+        if (task.getDelivery_date() !=null){
+            Instant deliveryDate=task.getDelivery_date();
+            taskAntigua.setDelivery_date(deliveryDate);
+        }
+        taskAntigua.setUpdated_at(Instant.now());
+        return taskRepository.save(taskAntigua);
     }
 
     @Override
