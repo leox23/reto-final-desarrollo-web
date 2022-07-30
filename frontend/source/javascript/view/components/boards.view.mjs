@@ -32,15 +32,16 @@ export class BoardsView {
         const createBoardModal = new CreateBoardModal();
         createBoardModal.init()
 
-        //configurar listeners
-        /*
-        const board1 = document.querySelectorAll(".board-container")
-        this.#addClickListener(board1, data)
-        */
+        //configurar listeners del board container
+        const board = document.querySelectorAll(".board-container")
+        this.#addClickListener(board, data)
+
+        //arregrar interferencia con el listener anteriores
+        //this.#optionsButtonListener()
+
         //listener de create board
         const createBtn = document.querySelector(".btn-create-board")
         createBtn.addEventListener('click', function() {
-            console.log("entre al listener");
             createBoardModal.showModal()
         })
     }
@@ -49,11 +50,23 @@ export class BoardsView {
         Array.from(node).map(function(item,index){
             item.addEventListener('click', function() {
                 const columns = new Columns()
+                console.log("entre al listener");
                 columns.init(data[index])
             })
         })
     }
-
+    
+    /*
+    #optionsButtonListener(){
+        const btns = querySelectorAll(".btn-options")
+        Array.from(btns).map(function(nodeItem){
+            nodeItem.addEventListener('click', function(){
+                nodeItem.toggleAttribute("aria-expanded")
+            })
+        })
+    }
+    
+    */
     #createContainer() {
         return document.createElement('div')
     }
@@ -90,14 +103,12 @@ export class BoardsView {
             return `
         <div id="container" class="board-container me-4">
             <div class="card" style="width: 18rem;">
-                <img src="https://images.pexels.com/photos/956999/milky-way-starry-sky-night-sky-star-956999.jpeg?cs=srgb&dl=pexels-felix-mittermeier-956999.jpg&fm=jpg" class="card-img-top" alt="...">
+                <img src="./images/tempGalaxi.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <h5 class="card-title align-self-center">${item.name}</h5>
-                        
                         <div class="dropdown">
-                            <button class="btn btn-ligth" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                            style="z-index:99;">
+                            <button class="btn btn-options btn-ligth" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                                 <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
                                 </svg>

@@ -1,16 +1,31 @@
-export class Column {
-    #id;
-    #name;
-    #createdAt;
-    #updatedAt;
+export class ColumnModel {
+    id;
+    name;
+    createdAt;
+    updatedAt;
 
+    /*
     constructor(data) {
         this.id = data.id;
         this.name = data.name;
         this.createdAt = data.createdAt;
         this.updatedAt = data.updatedAt;
     }
+    */
 
+    columnAdapter(data){
+        return data.map((item, index)=> {
+            return {
+                id: item.id,
+                name: item.id_column.name,
+                createdAt: item.id_column.createdAt,
+                updatedAt: item.id_column.updatedAt,
+                tasks: item.id_column.tasks_column
+            }
+
+        })
+    }
+/*
     get Id(){
         return this.#id;
     }
@@ -43,4 +58,5 @@ export class Column {
     set UpdatedAt(updatedAt){
         this.#updatedAt = updatedAt;
     }
+    */
 }

@@ -11,7 +11,7 @@ import { Header } from "../view/components/header.view.mjs";
 
 // Services
 
-export class RickController {
+export class IndexController {
     #indexView;
     #header;
 
@@ -26,5 +26,5 @@ export class RickController {
     }
 }
 
-export const index = new RickController();
+export const index = new IndexController();
 index.init();
