@@ -25,12 +25,22 @@ public class TaskService implements TaskServiceInterface {
     @Autowired
     private TaskRepository taskRepository;
 
+    /**
+     *
+     * @param idBoard recibe el id del board donde se encuentra
+     * @return retorna las tareas asociadas a ese id
+     */
     @Override
     @Transactional(readOnly = true)
     public List<TaskDomain> findAllTasksById(Integer idBoard) {
         return  taskRepository.findAllById(Collections.singleton(idBoard));
     }
 
+    /**
+     *
+     * @param id recibe el id de la tarea a buscar
+     * @return retorna la tarea asociada a ese id
+     */
     @Override
     @Transactional(readOnly = true)
     public TaskDomain findById(Integer id) {
@@ -38,6 +48,12 @@ public class TaskService implements TaskServiceInterface {
         return task.isPresent() ? task.get() : null;
     }
 
+    /**
+     *
+     * @param task recibe los datos para crear la tarea
+     * @param idboard recibe el id del tablero donde se va a crear la tarea
+     * @return retorna la nueva tarea
+     */
     @Override
     public TaskDomain create(TaskDomain task,Integer idboard) {
         task.setColumID(1);
@@ -49,26 +65,31 @@ public class TaskService implements TaskServiceInterface {
         return newtask;
     }
 
+    /**
+     *
+     * @param id recibe el id de la tarea que se quiere modificar
+     * @param task recibe los datos que le van a cambiar a la tarea
+     * @return retorna la tarea ya modificada
+     */
     @Override
     public TaskDomain update(Integer id, TaskDomain task) {
         var  taskAntigua=taskRepository.findById(id).get();
         task.setId(id);
         if (task.getName() !=null){
-            String nombre=task.getName();
-            taskAntigua.setName(nombre);
-        }
+            taskAntigua.setName(task.getName());}
         if (task.getDescription() !=null){
-            String description=task.getDescription();
-            taskAntigua.setDescription(description);
-        }
+            taskAntigua.setDescription(task.getDescription());}
         if (task.getDelivery_date() !=null){
-            Instant deliveryDate=task.getDelivery_date();
-            taskAntigua.setDelivery_date(deliveryDate);
-        }
+            taskAntigua.setDelivery_date(task.getDelivery_date());}
         taskAntigua.setUpdated_at(Instant.now());
         return taskRepository.save(taskAntigua);
     }
 
+    /**
+     *
+     * @param id recibe el id de la tarea a eliminar
+     * @return retorna un mensaje con el status de la operacion
+     */
     @Override
     public TaskDomain delete(Integer id) {
         var taskdomain=taskRepository.findById(id);
@@ -79,6 +100,12 @@ public class TaskService implements TaskServiceInterface {
         return null;
     }
 
+    /**
+     *
+     * @param idnext recibe el id de la columna donde se va a mover la tarea
+     * @param id recibe el id de la tarea que se quiere mover
+     * @return retorna la tarea en la columna de destino
+     */
     public TaskDomain taskmoving(Integer idnext, Integer id) {
         var movingtask=taskRepository.findById(id);
         if (movingtask!=null ){
