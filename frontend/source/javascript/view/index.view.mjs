@@ -11,6 +11,7 @@ export class IndexView {
     document.title = "My Krello - Boards";
     this.#header = new Header();
     this.#board = new BoardsView();
+    
   }
 
   init() {

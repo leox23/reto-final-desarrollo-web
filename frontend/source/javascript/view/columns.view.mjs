@@ -11,10 +11,14 @@ export class Columns {
         this.#modal = new DetailsModal()
      }
 
-     init(){
-      this.#container.innerHTML = this.#addColumns()
-      this.#modal.init()
-      this.#addClickListener(".task")
+     init(boardColumns){
+        console.log(boardColumns);
+        this.#container.innerHTML = this.#addColumns()
+        this.#modal.init()
+        this.#addClickListener(".task")
+        document.querySelector('.modal').remove()
+
+
      }
 
      #addClickListener(node) {

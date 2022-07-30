@@ -3,13 +3,15 @@
 export class DetailsModal {
     #nodebody;
 
+    #titleModal;
+
     constructor(){
       this.#nodebody = document.querySelector("body")
+      this.#titleModal = "Titulo desde atributo"
     }
 
     showModal(title){
       const modalContainer = document.querySelector('.modal')
-      
       modalContainer.innerHTML = this.#updateModalContent(title)
       
       const myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
