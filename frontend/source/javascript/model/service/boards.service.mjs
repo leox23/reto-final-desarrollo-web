@@ -1,6 +1,7 @@
 'use strict';
 
 import { Config } from "../../config.mjs"
+import { IndexController } from "../../controller/index.controller.mjs";
 
 export class BoardsService {
 
@@ -17,20 +18,32 @@ export class BoardsService {
         return fetch(`http://localhost:8080/api/v1/board/${boardId}`,
             {method: 'DELETE'},
         )
-        .then(response => console.log(response))
+        .then((response) => {
+            console.log(response)
+            const indexController = new IndexController();
+            indexController.init()
+        })
         .catch(err => console.error(err));
     }
 
     update(boardId, newName){
-        return fetch(`http://localhost:8080/api/v1/board/${boardId}`,
-            {method: 'PUT',
+        console.log("desde dentro de service update");
+        return fetch(`http://localhost:8080/api/v1/board/${boardId}`,{
+            method: 'PUT',
             body: JSON.stringify(
                 {
-                    "name": `${newName}`,
+                    "name": `${newName}`
                 }
-            )},
-        )
-        .then(response => console.log(response))
+            ),
+            headers: {
+                'Content-Type': 'application/json'                
+            }
+        })
+        .then((response) => {
+            console.log(response)
+            const indexController = new IndexController();
+            indexController.init()
+        })
         .catch(err => console.error(err));
     }
 
@@ -39,14 +52,18 @@ export class BoardsService {
             method: 'POST',
             body: JSON.stringify(
                 {
-                    "name": `${boardName}`,
+                    "name": `${boardName}`
                 }
             ),
             headers: {
                 'Content-Type': 'application/json'                
             }
         })
-        .then(response => console.log(response))
+        .then((response) => {
+            console.log(response)
+            const indexController = new IndexController();
+            indexController.init()
+        })
         .catch(err => console.error(err));
     }
 }

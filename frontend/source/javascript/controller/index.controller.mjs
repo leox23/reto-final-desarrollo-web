@@ -41,12 +41,9 @@ export class IndexController {
         this.#fetchBoards.delete(boardId)
     }
 
-    renameBoard(boardId, newName){
-        this.fetchBoards.update(boardId, newName)
+    update(boardId, newName){
+        this.#fetchBoards.update(boardId, newName)
     }
-    
-
 }
-
 export const index = new IndexController();
 index.init();

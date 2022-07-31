@@ -9,7 +9,7 @@ export class InputTextModal {
     this.#nodebody = document.querySelector("body")
   }
 
-    showModal(title, btnName, placeHolder){
+    newBoardModal(title, btnName, placeHolder){
       const modalContainer = document.querySelector('.modal')
       
       modalContainer.innerHTML = this.#updateModalContent(title, btnName,placeHolder)
@@ -22,10 +22,30 @@ export class InputTextModal {
       saveBtn.addEventListener("click", () => {
         const indexController = new IndexController();
         const name = document.querySelector(".input-board-name").value;
-        indexController.saveBoard(name)
         myModal.hide()
+        indexController.saveBoard(name)
       })
     }
+
+
+    renameBoardModal(title, btnName, placeHolder, boardId){
+      const modalContainer = document.querySelector('.modal')
+      
+      modalContainer.innerHTML = this.#updateModalContent(title, btnName,placeHolder)
+      
+      const myModal = new bootstrap.Modal(document.getElementById('inputTextModal'))
+      myModal.show()
+      
+      //agregando listener a guardar
+      const saveBtn = document.querySelector(".save-btn")
+      saveBtn.addEventListener("click", () => {
+        const indexController = new IndexController();
+        const newName = document.querySelector(".input-board-name").value;
+        myModal.hide()
+        indexController.update(boardId, newName)
+      })
+    }
+
 
     init() {
       this.#nodebody.innerHTML += this.#createModalContainer()

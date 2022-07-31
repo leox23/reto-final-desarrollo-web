@@ -42,7 +42,7 @@ export class BoardsView {
         const createBtn = document.querySelector(".btn-create-board")
         createBtn.addEventListener('click', function() {
             const inputTextModal = new InputTextModal();
-            inputTextModal.showModal("Nuevo tablero", "Crear", "Nombre del tablero")
+            inputTextModal.newBoardModal("Nuevo tablero", "Crear", "Nombre del tablero")
         })
 
         //dropdown show on hover y hide on out
@@ -72,11 +72,11 @@ export class BoardsView {
         const optionCambiarNombre = document.querySelectorAll(".option-cambiar-nombre")
         optionCambiarNombre.forEach( (item) => {
             item.addEventListener("click", () => {
-                const indexController = new IndexController()
+                const inputTextModal = new InputTextModal();
                 const boardId = item.getAttribute("data-board-id")
-                console.log("entre a la cambio nombre listener")
-                console.log(boardId);
-                indexController.renameBoard(boardId, newName)
+
+                inputTextModal.renameBoardModal("Renombrar tablero", "Modificar", "Nuevo nombre", boardId)
+                
             })
         })
 
