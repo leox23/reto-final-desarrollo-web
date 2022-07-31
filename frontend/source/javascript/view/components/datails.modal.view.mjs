@@ -10,9 +10,9 @@ export class DetailsModal {
       this.#titleModal = "Titulo desde atributo"
     }
 
-    showModal(title){
+    showModal(taskData){
       const modalContainer = document.querySelector('.modal')
-      modalContainer.innerHTML = this.#updateModalContent(title)
+      modalContainer.innerHTML = this.#updateModalContent(taskData)
       
       const myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
       myModal.show()
@@ -30,31 +30,52 @@ export class DetailsModal {
       `
   }
 
-    #updateModalContent(data){
+    #updateModalContent(taskData){
       return `
     <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
           <!--titulo del modal-->
-        <h5 class="modal-title" id="exampleModalLabel">${data}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">${taskData.name}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <!--cuerpo del modal-->
       <div class="modal-body">
 
-          <!--fecha de vencimiento-->
-        <div class="container-task-deadline mb-2">
-          <p class="fs-6 m-0">Vencimiento:</p>
-        <div class="deadline-date bg-danger bg-opacity-25 border d-flex rounded" style="padding: 0px 4px;width:fit-content;">
+      <!--fecha de creacion-->
+      <div class="container-task-deadline mb-2">
+        <p class="fs-6 m-0">Fecha creacion:</p>
+      <div class="deadline-date bg-primary bg-opacity-10 border d-flex rounded" style="padding: 0px 4px;width:fit-content;">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar mt-1" viewBox="0 0 16 16">
+          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+        </svg>
+      <p class="deadline-date-text" style="height:10px;padding-left: 6px;">${taskData.createdAt}</p>
+      </div>
+    </div>
           
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-clock align-self-center" viewBox="0 0 16 16">
-              <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
-              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
-            </svg>
-          
-          <p class="deadline-date-text" style="height:10px;padding-left: 6px;">4 de julio [plazo vencido]</p>
-          </div>
-        </div>
+
+
+      ${taskData.delivery_date ? `<!--fecha de vencimiento-->
+      <div class="container-task-deadline mb-2">
+        <p class="fs-6 m-0">Vencimiento: 
+        <input type="date" id="start" style="width:24px;height:24px;" name="date-picker"
+        value="2018-07-22"
+        min="2018-01-01" max="2018-12-31">
+        </p>
+
+      <div class="deadline-date bg-danger bg-opacity-25 border d-flex rounded" style="padding: 0px 4px;width:fit-content;">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-clock align-self-center" viewBox="0 0 16 16">
+            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+          </svg>
+      <p class="deadline-date-text" style="height:10px;padding-left: 6px;">${taskData.delivery_date} [plazo vencido]</p>
+      </div>
+    </div>`
+        
+          :  ""
+    }
 
         <!--descripcion-->
           <div class="container-description mb-3">
@@ -67,7 +88,7 @@ export class DetailsModal {
               </div>
               <!--campo de descripcion-->
               <div class="form-floating">
-                  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                  <textarea class="form-control"  placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">${taskData.description ? taskData.description : ''}</textarea>
                   <label for="floatingTextarea2">Añade cosas especificas sobre la tarea</label>
                 </div>
           </div>
@@ -86,17 +107,6 @@ export class DetailsModal {
           </div>
           <!--log items-->
           <div class="logs-container">
-              
-              <!--agregar nuevo log-->
-              <div class="input-group mb-2">
-                  <span href="#" class="input-group-text" id="basic-addon1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
-                    </svg>
-                  </span>
-                  <input type="text" class="form-control" placeholder="Nueva actividad en tarea" aria-label="Input group example" aria-describedby="basic-addon1">
-                </div>
-
               <!--lista de tareas-->
               <div class="logs-items-container">
                   <div class="log-item p-2 mb-1 border shadow-sm rounded">
@@ -116,8 +126,8 @@ export class DetailsModal {
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
+        <button type="button" class="btn btn-primary">Guardar</button>
       </div>
     </div>
   </div>

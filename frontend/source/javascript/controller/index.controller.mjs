@@ -5,25 +5,47 @@ import { Config } from "../config.mjs";
 
 // Views
 import { IndexView } from "../view/index.view.mjs";
-import { Header } from "../view/components/header.view.mjs";
 
 // Models
+import { ApiModel } from "../model/api.model.mjs";
+import { BoardsModel } from "../model/board.model.mjs"
 
 // Services
+import { BoardsService } from "../model/service/boards.service.mjs";
 
 export class IndexController {
     #indexView;
-    #header;
+    #fetchBoards;
+    #apiModel;
 
     constructor() {
         this.#indexView = new IndexView();
-        this.#header = new Header();
+        this.#fetchBoards = new  BoardsService();
+        this.#apiModel = new ApiModel();
+
     }
 
-    init() {
-        this.#header.init()
-        this.#indexView.init();
+    async init() {
+        const {KRELLO_URL_BASE} = Config
+        this.#apiModel = await this.#fetchBoards.findAll(KRELLO_URL_BASE);
+        const {data} = this.#apiModel
+        this.#indexView.init(data);
     }
+
+    saveBoard(boardName) {
+        //api crear nuevo board
+        this.#fetchBoards.create(boardName)
+    }
+
+    deleteBoard(boardId){
+        this.#fetchBoards.delete(boardId)
+    }
+
+    renameBoard(boardId, newName){
+        this.fetchBoards.update(boardId, newName)
+    }
+    
+
 }
 
 export const index = new IndexController();

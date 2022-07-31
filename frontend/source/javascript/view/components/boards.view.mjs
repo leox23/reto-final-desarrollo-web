@@ -1,22 +1,24 @@
 'use strict';
 
-import { Columns } from "../columns.view.mjs"; 
-import { BoardsService } from "../../model/service/boards.service.mjs";
-import { CreateBoardModal } from "./create.board.modal.view.mjs";
+import { InputTextModal } from "./input.text.modal.view.mjs";
+import { ColumnsController } from "../../controller/colums.controller.mjs";
+import { IndexController } from "../../controller/index.controller.mjs";
+import { ColumnsView } from "../columns.view.mjs";
+
 export class BoardsView {
     #nodeBody;
+    #columsController;
 
     constructor() {        
         this.#nodeBody = document.querySelector('body')
+        this.#columsController = new ColumnsController()
     }
 
-    async init() {
-        //fetch boards
-        const apiBoards = new BoardsService();
-        const response = await apiBoards.findAll();
-        const {data} = response
+    init(data) {
+        // desesctructurando datos
+        console.log("data recibida");
         console.log(data);
-        
+
         //container de section
         const container = this.#createContainer()
         this.#nodeBody.append(container);
@@ -26,47 +28,124 @@ export class BoardsView {
         container.id = "container"
 
         //agregar boton crear y boards a sus containers
-        document.querySelector('.all-boards').innerHTML = this.#addButtonCreateBoard() + this.#addBoards(data)
-
-        //modal de crear board
-        const createBoardModal = new CreateBoardModal();
-        createBoardModal.init()
+        document.querySelector('.all-boards').innerHTML = this.#addButtonInputText() + this.#addBoards(data).join('')
+        
+        //establecer de fondo modal create board
+        this.#setInputTextModal()
 
         //configurar listeners del board container
-        const board = document.querySelectorAll(".board-container")
-        this.#addClickListener(board, data)
+        //const nodes = document.querySelectorAll(".board-container")
+        //this.#addClickListener(nodes,data)
+        //this.#onEventBoard(data)
 
-        //arregrar interferencia con el listener anteriores
-        //this.#optionsButtonListener()
-
-        //listener de create board
+        //listener de boton create board
         const createBtn = document.querySelector(".btn-create-board")
         createBtn.addEventListener('click', function() {
-            createBoardModal.showModal()
+            const inputTextModal = new InputTextModal();
+            inputTextModal.showModal("Nuevo tablero", "Crear", "Nombre del tablero")
         })
+
+        //dropdown show on hover y hide on out
+        const dropdowns = document.querySelectorAll(".dropdown")
+        const dropdownsLists = document.querySelectorAll(".dropdown-menu")
+        dropdowns.forEach((dropdown, index) => {
+            dropdown.addEventListener("mouseover", () => { 
+                dropdownsLists[index].classList.add("show");
+            })
+            
+            dropdown.addEventListener("mouseout", () => { 
+                dropdownsLists[index].classList.remove("show");
+            })
+        })
+        
+        
+        const optionEliminar = document.querySelectorAll(".option-eliminar")
+        optionEliminar.forEach( (item) => {
+            item.addEventListener("click", () => {
+                const indexController = new IndexController()
+                const boardId = item.getAttribute("data-board-id")
+                indexController.deleteBoard(boardId)
+            })
+        })
+        
+
+        const optionCambiarNombre = document.querySelectorAll(".option-cambiar-nombre")
+        optionCambiarNombre.forEach( (item) => {
+            item.addEventListener("click", () => {
+                const indexController = new IndexController()
+                const boardId = item.getAttribute("data-board-id")
+                console.log("entre a la cambio nombre listener")
+                console.log(boardId);
+                indexController.renameBoard(boardId, newName)
+            })
+        })
+
     }
 
+
+    /*
     #addClickListener(node, data){
+        console.log("data de listener");
+        console.log(data);
         Array.from(node).map(function(item,index){
             item.addEventListener('click', function() {
-                const columns = new Columns()
+                const columns = new ColumnsView()
                 console.log("entre al listener");
                 columns.init(data[index])
             })
         })
     }
-    
-    /*
-    #optionsButtonListener(){
-        const btns = querySelectorAll(".btn-options")
-        Array.from(btns).map(function(nodeItem){
-            nodeItem.addEventListener('click', function(){
-                nodeItem.toggleAttribute("aria-expanded")
-            })
-        })
+*/
+
+
+    #onEventBoard(data) {
+        console.log("desde on event boadr");
+        console.log(data);
+        const on = (element, event, selector, handler) => {
+            element.addEventListener(event, (e) => {
+              if (e.target.closest(selector)) {
+                e.preventDefault();
+                handler(e);
+              }
+            });
+          };
+
+          const nodes = document.querySelectorAll(".board-container")
+          const parent = document.querySelector(".all-boards") 
+
+          on(document, "click", ".board-container", (e) => {
+
+            const index = e.target.getAttribute("data-index-node")
+            const columns = new ColumnsController()
+            console.log("probando maxima");
+            console.log(index);
+            columns.init(data[index])
+/*
+            #addClickListener(node, data){
+                Array.from(node).map(function(item,index){
+                    item.addEventListener('click', function() {
+                    })
+                })
+            }
+            */
+        });
     }
-    
+
+    /*
+    #optionsButtonListener() {
+        const dropdowns = document.querySelectorAll(".dropdown")
+        dropdowns.forEach((dropdown) => {
+            dropdown.addEventListener("click", () => {
+            })
+        }) 
+    }
     */
+
+    #setInputTextModal(){
+        const inputTextModal = new InputTextModal();
+        inputTextModal.init()
+    }
+
     #createContainer() {
         return document.createElement('div')
     }
@@ -78,12 +157,12 @@ export class BoardsView {
             <p class="fs-6">Cantidad de tableros 1/1</p>
         </div>
     
-    <div class="container all-boards d-flex flex-row bd-highlight">
+    <div class="container justify-content-center all-boards d-flex flex-row flex-wrap align-content-between bd-highlight">
     </div>
     `
     }
 
-    #addButtonCreateBoard() {
+    #addButtonInputText() {
         return `
         <button class="btn btn-create-board btn-ligth align-self-center mx-2" style=" height: auto;" type="button">
 
@@ -99,9 +178,9 @@ export class BoardsView {
     }
 
     #addBoards(data) {
-        return data.map( function(item, index) {
+        return data.map( (item, index) => {
             return `
-        <div id="container" class="board-container me-4">
+        <div id="container" class="board-container me-4 mb-5" data-index-node="${index}">
             <div class="card" style="width: 18rem;">
                 <img src="./images/tempGalaxi.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -114,9 +193,8 @@ export class BoardsView {
                                 </svg>
                             </button>
                             <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Editar nombre</a></li>
-                            <li><a class="dropdown-item" href="#">A Favoritos</a></li>
-                            <li><a class="dropdown-item" href="#">Eliminar</a></li>
+                            <li><a class="dropdown-item option-cambiar-nombre" data-board-id="${item.id}" style="cursor: pointer;">Editar nombre</a></li>
+                            <li><a class="dropdown-item option-eliminar" data-board-id="${item.id}" style="cursor: pointer;">Eliminar</a></li>
                             </ul>
                         </div>
                     </div>

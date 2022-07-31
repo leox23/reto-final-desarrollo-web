@@ -14,7 +14,7 @@ export class ColumnModel {
     */
 
     columnAdapter(data){
-        return data.map((item, index)=> {
+        return Array.from(data).map((item, index)=> {
             return {
                 id: item.id,
                 name: item.id_column.name,
@@ -22,7 +22,6 @@ export class ColumnModel {
                 updatedAt: item.id_column.updatedAt,
                 tasks: item.id_column.tasks_column
             }
-
         })
     }
 /*

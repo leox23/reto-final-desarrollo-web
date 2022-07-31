@@ -22,8 +22,8 @@ console.log(moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a'));
     
   }
 
-  init() {
+  init(boardsResult) {
     this.#header.init();
-    this.#board.init()
+    this.#board.init(boardsResult)
   }
 }

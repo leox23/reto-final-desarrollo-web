@@ -1,16 +1,16 @@
 'use strict'
 
-export class Board {
+export class BoardsModel {
     #id;
     #name;
     #createdAt;
     #updatedAt;
 
     constructor(data) {
-        this.id = data.id;
-        this.name = data.name;
-        this.createdAt = data.createdAt;
-        this.updatedAt = data.updatedAt;
+        this.#id = data.id;
+        this.#name = data.name;
+        this.#createdAt = data.createdAt;
+        this.#updatedAt = data.updatedAt;
     }
 
     get Id(){
