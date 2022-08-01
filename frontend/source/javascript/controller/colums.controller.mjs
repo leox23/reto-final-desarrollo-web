@@ -2,6 +2,7 @@
 
 import { ColumnsView } from '../view/columns.view.mjs'
 import { ColumnModel } from '../model/column.model.mjs'
+import { TasksService } from '../model/service/tasks.service.mjs';
 
 export class ColumnsController {
     
@@ -22,5 +23,10 @@ export class ColumnsController {
         console.log("🚀 ~ file: colums.controller.mjs ~ line 13 ~ ColumnsController ~ init ~ columnList", columnList)
 
         columnsView.init(columnsRaw)
+    }
+
+    createNewTask(newTaskName, newTaskDescription, actualColumn, actualBoard){
+        const taskService = new TasksService();
+        taskService.createNewTask(newTaskName, newTaskDescription, actualColumn, actualBoard)
     }
 }
