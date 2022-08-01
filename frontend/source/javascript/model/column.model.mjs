@@ -1,61 +1,58 @@
+'use strict';
 export class ColumnModel {
     id;
     name;
     createdAt;
     updatedAt;
+    tasks; //tareas pertenecientes a columna
 
-    /*
-    constructor(data) {
-        this.id = data.id;
-        this.name = data.name;
-        this.createdAt = data.createdAt;
-        this.updatedAt = data.updatedAt;
+    constructor(id, name, createdAt, updatedAt, tasks) {
+        this.id = id;
+        this.name = name;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.tasks = tasks;
     }
-    */
 
-    columnAdapter(data){
-        return Array.from(data).map((item, index)=> {
-            return {
-                id: item.id,
-                name: item.id_column.name,
-                createdAt: item.id_column.createdAt,
-                updatedAt: item.id_column.updatedAt,
-                tasks: item.id_column.tasks_column
-            }
-        })
-    }
-/*
+
     get Id(){
-        return this.#id;
+        return this.id;
     }
 
     set Id(id){
-        this.#id = id;
+        this.id = id;
     }
 
     get Name(){
-        return this.#name;
+        return this.name;
     }
 
     set Name(name){
-        this.#name = name;
+        this.name = name;
     }
 
     
     get CreatedAt(){
-        return this.#createdAt
+        return this.createdAt
     }
 
     set CreatedAt(createdAt){
-        this.#createdAt = createdAt;
+        this.createdAt = createdAt;
     }
 
     get UpdatedAt(){
-        return this.#updatedAt;
+        return this.updatedAt;
     }
 
     set UpdatedAt(updatedAt){
-        this.#updatedAt = updatedAt;
+        this.updatedAt = updatedAt;
     }
-    */
+
+    get ColumnsForBoard(){
+        return this.columnsForBoard;
+    }
+
+    set ColumnsForBoard(columnsForBoard){
+        this.columnsForBoard = columnsForBoard;
+    }
 }

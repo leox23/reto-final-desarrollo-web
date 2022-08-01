@@ -12,31 +12,22 @@ export class ColumnsView {
     this.#modal = new DetailsModal();
   }
 
-  async init(boardColumns) {
-    const columnModel = new ColumnModel();
-    const columns = columnModel.columnAdapter(boardColumns);
-    console.log("imprimiendo adapter");
-    console.log(columns);
-
+  async init(columns) {
+    console.log("🚀 ~ file: columns.view.mjs ~ line 16 ~ ColumnsView ~ init ~ columns", columns)
     document.querySelector(".modal").remove();
-
-    console.log("el retorno del metodo");
-    console.log(columns);
-
+    
+    //recibe contenedor de columnas
     const boardsContainer = this.#addChildFlexContainer();
     let htmlResult = this.#addColumns(columns).join("");
     boardsContainer.innerHTML = htmlResult;
     this.#modal.init();
 
+    // agregar accion de click para abrir modal con info
     this.#addTaskListeners(columns);
-
-    //para agregar el listener del modal de una tarea
-    //para cuando los tenga a todos
-    //this.#addClickListener(".task")
   }
 
-  // para agregar el lintener de una tarea del modal
-  //para cuando los tenga a todos
+  // para agregar el listener de una tarea del modal
+  // para cuando los tenga a todos
   addTaskClickListener(node, taskData) {
     node.addEventListener("click", function () {
       const detailsModal = new DetailsModal();
@@ -45,46 +36,24 @@ export class ColumnsView {
   }
 
   #addTaskListeners(columns) {
+    console.log("🚀 ~ file: columns.view.mjs ~ line 42 ~ ColumnsView ~ #addTaskListeners ~ columns", columns)
     const allTaskResolve = [];
     columns.forEach((column) => {
-      column.tasks.forEach((tasks) => {
+      column.id_column.tasks_column.forEach((tasks) => {
         allTaskResolve.push(tasks);
       });
     });
-    console.log("allTaskResolve");
-    console.log(allTaskResolve);
 
-    allTaskResolve.forEach((task, index) => {
+    //obtener los ids de los tasks
+    allTaskResolve.forEach((task) => {
       let taskContainer = document.querySelector(`[data-task-id="${task.id}"]`);
-
+      // listener para injectar datos correctamente
       taskContainer.addEventListener("click", () => {
         const detailsModal = new DetailsModal();
         detailsModal.showModal(task);
       });
-
-      //this.#addClickListener(".task")
-
-      /*
-    #addClickListener(node) {
-        document.querySelector(node).addEventListener("click", function(){
-           const detailsModal = new DetailsModal();
-           detailsModal.showModal("hola dsde jajaj");
-        })
-    }
-    */
     });
 
-    /*
-    let element = document.querySelector('[data-task-id="2"]').innerText;
-
-    var elementNode = document.querySelector('[data-task-id="2"]');
-    elementNode.addEventListener("click", prueba);
-
-    function prueba() {
-      alert("leo");
-    }
-    console.log(element);
-    */
   }
 
   #addChildFlexContainer() {
@@ -103,7 +72,8 @@ export class ColumnsView {
   }
 
   #addTasks(tasks) {
-    return tasks.map((item, index) => {
+  console.log("🚀 ~ file: columns.view.mjs ~ line 101 ~ ColumnsView ~ #addTasks ~ tasks", tasks)
+    return tasks.map((item) => {
       return `
         <div class="task bg-light bg-gradient border shadow-sm p-2 mb-1 rounded" draggable="true" data-task-id="${
           item.id
@@ -119,7 +89,7 @@ export class ColumnsView {
           </svg>
         <p class="deadline-date-text align-self-center m-0 p-0 mb-1 ps-1" style="height:14px;padding-left: 6px;font-size:12px;">${item.delivery_date}</p>
     </div>`
-            : "" /*else ternario, devolver nada*/
+            : "" /*else ternario, devuelve nada*/
         } 
     </div>
         `;
@@ -127,11 +97,12 @@ export class ColumnsView {
   }
 
   #addColumns(columns) {
-    return columns.map((item) => {
+    console.log("🚀 ~ file: columns.view.mjs ~ line 134 ~ ColumnsView ~ #addColumns ~ columns", columns)
+    return columns.map((column) => {
       return `
             <div class="column-container mx-3 bg-secondary bg-opacity-10 border rounded" style="width: 272px;max-height: 600px;height:fit-content;">
                 <div class="container d-flex flex-row justify-content-between p-2">
-                    <h6 class="align-self-center m-0">${item.name}</h6>
+                    <h6 class="align-self-center m-0">${column.name}</h6>
                     <button type="button" style="height:25px;padding:0px 6px;" class="btn btn-light align-self-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="15" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                         <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
@@ -141,8 +112,8 @@ export class ColumnsView {
                 <div class="tasks-container p-2">
 
                 ${
-                  //agregar las tareas correspondientes
-                  this.#addTasks(item.tasks).join("")
+                  // mandar a agregar todas las tareas de esta columna
+                  this.#addTasks(column.id_column.tasks_column).join("") 
                 }
 
             </div>
@@ -154,7 +125,7 @@ export class ColumnsView {
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                     </svg>
-                    <p class="m-0" style="padding-left:8px">Nueva tarea</p>
+                    <p class="m-0 create-task-button" style="padding-left:8px">Nueva tarea</p>
                 </button>
         </div>
             `;

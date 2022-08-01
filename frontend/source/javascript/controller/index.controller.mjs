@@ -8,7 +8,6 @@ import { IndexView } from "../view/index.view.mjs";
 
 // Models
 import { ApiModel } from "../model/api.model.mjs";
-import { BoardsModel } from "../model/board.model.mjs"
 
 // Services
 import { BoardsService } from "../model/service/boards.service.mjs";
@@ -22,7 +21,6 @@ export class IndexController {
         this.#indexView = new IndexView();
         this.#fetchBoards = new  BoardsService();
         this.#apiModel = new ApiModel();
-
     }
 
     async init() {

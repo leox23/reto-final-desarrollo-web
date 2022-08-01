@@ -3,7 +3,6 @@
 import { InputTextModal } from "./input.text.modal.view.mjs";
 import { ColumnsController } from "../../controller/colums.controller.mjs";
 import { IndexController } from "../../controller/index.controller.mjs";
-import { ColumnsView } from "../columns.view.mjs";
 
 export class BoardsView {
     #nodeBody;
@@ -33,9 +32,9 @@ export class BoardsView {
         //establecer de fondo modal create board
         this.#setInputTextModal()
 
-        //configurar listeners del board container
-        //const nodes = document.querySelectorAll(".board-container")
-        //this.#addClickListener(nodes,data)
+        //todo configurar listeners del board container
+        const nodes = document.querySelectorAll(".board-container")
+        this.#addClickListener(nodes,data)
         //this.#onEventBoard(data)
 
         //listener de boton create board
@@ -44,6 +43,23 @@ export class BoardsView {
             const inputTextModal = new InputTextModal();
             inputTextModal.newBoardModal("Nuevo tablero", "Crear", "Nombre del tablero")
         })
+
+
+/*
+######################################################################
+  listeners de boton options
+######################################################################
+*/      //click en boton opciones 
+/*      presenta bug, no logra ingonar click de contenedor 
+        const btnOption = document.querySelector(".btn-options")
+        const dropdownsLists = document.querySelectorAll(".dropdown-menu")
+        btnOption.forEach( (item,index) => {
+            item.addEventListener("click", (event) => {
+                event.stopPropagation()
+                dropdownsLists[index].classList.add("show");
+            })
+        })
+*/
 
         //dropdown show on hover y hide on out
         const dropdowns = document.querySelectorAll(".dropdown")
@@ -58,23 +74,23 @@ export class BoardsView {
             })
         })
         
-        
         const optionEliminar = document.querySelectorAll(".option-eliminar")
         optionEliminar.forEach( (item) => {
-            item.addEventListener("click", () => {
+            item.addEventListener("click", (event) => {
                 const indexController = new IndexController()
                 const boardId = item.getAttribute("data-board-id")
+                event.stopPropagation()
                 indexController.deleteBoard(boardId)
+                
             })
         })
-        
-
+    
         const optionCambiarNombre = document.querySelectorAll(".option-cambiar-nombre")
         optionCambiarNombre.forEach( (item) => {
-            item.addEventListener("click", () => {
+            item.addEventListener("click", (event) => {
                 const inputTextModal = new InputTextModal();
                 const boardId = item.getAttribute("data-board-id")
-
+                event.stopPropagation()
                 inputTextModal.renameBoardModal("Renombrar tablero", "Modificar", "Nuevo nombre", boardId)
                 
             })
@@ -82,70 +98,31 @@ export class BoardsView {
 
     }
 
-
-    /*
     #addClickListener(node, data){
-        console.log("data de listener");
+        console.log("listener aplicado, tengo en data: ");
         console.log(data);
         Array.from(node).map(function(item,index){
             item.addEventListener('click', function() {
-                const columns = new ColumnsView()
-                console.log("entre al listener");
-                columns.init(data[index])
+                const columnsController = new ColumnsController()
+
+                //aqui se deben enviar todas las tareas para desestructurar
+                console.log("entre al listener y mando data[index]");
+                columnsController.init(data[index])
             })
         })
     }
-*/
 
-
-    #onEventBoard(data) {
-        console.log("desde on event boadr");
-        console.log(data);
-        const on = (element, event, selector, handler) => {
-            element.addEventListener(event, (e) => {
-              if (e.target.closest(selector)) {
-                e.preventDefault();
-                handler(e);
-              }
-            });
-          };
-
-          const nodes = document.querySelectorAll(".board-container")
-          const parent = document.querySelector(".all-boards") 
-
-          on(document, "click", ".board-container", (e) => {
-
-            const index = e.target.getAttribute("data-index-node")
-            const columns = new ColumnsController()
-            console.log("probando maxima");
-            console.log(index);
-            columns.init(data[index])
-/*
-            #addClickListener(node, data){
-                Array.from(node).map(function(item,index){
-                    item.addEventListener('click', function() {
-                    })
-                })
-            }
-            */
-        });
-    }
-
-    /*
-    #optionsButtonListener() {
-        const dropdowns = document.querySelectorAll(".dropdown")
-        dropdowns.forEach((dropdown) => {
-            dropdown.addEventListener("click", () => {
-            })
-        }) 
-    }
-    */
-
+    /**
+     * establecer el contenedor del modal
+     */
     #setInputTextModal(){
         const inputTextModal = new InputTextModal();
         inputTextModal.init()
     }
-
+/**
+ * Crear el container donde iran los boards
+ * @returns el nodo del container
+ */
     #createContainer() {
         return document.createElement('div')
     }
