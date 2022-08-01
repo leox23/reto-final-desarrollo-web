@@ -1,30 +1,21 @@
-'use strict';
+"use strict";
 
-import { Navbar } from "./components/navbar.component.mjs";
-import { Table } from "./components/table.component.mjs";
+import { BoardsView } from "./components/boards.view.mjs";
+import { Header } from "./components/header.view.mjs";
+
 
 export class IndexView {
-    #privateContainer;
-    #privateNavbar;
-    #privateTable;
-    #privateData;
+  #board;
+  #header;
 
-    constructor(header) {
-        this.#privateContainer = document.querySelector('.container');
-        this.#privateNavbar = new Navbar();
-        this.#privateTable = new Table(header);
-    }
+  constructor() {
+    document.title = "My Krello - Boards";
+    this.#header = new Header();
+    this.#board = new BoardsView();
+  }
 
-    set Data(data) {
-        this.#privateData = data;
-    }
-
-    init() {
-        this.#privateTable.Data = this.#privateData;
-        this.#privateContainer.append(
-            this.#privateNavbar.get(),
-            this.#privateTable.get()
-        );
-    }
-
+  init(boardsResult) {
+    this.#header.init();
+    this.#board.init(boardsResult)
+  }
 }

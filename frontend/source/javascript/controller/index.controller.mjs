@@ -1,26 +1,47 @@
 "use strict";
 
-// Services
-import { MyUsersService } from "../model/services/my-users.service.mjs";
+// Config
+import { Config } from "../config.mjs";
 
 // Views
 import { IndexView } from "../view/index.view.mjs";
 
-class IndexController {
-    #privateView;
-    #privateMyUsersService;
+// Models
+import { ApiModel } from "../model/api.model.mjs";
+
+// Services
+import { BoardsService } from "../model/service/boards.service.mjs";
+
+export class IndexController {
+    #indexView;
+    #fetchBoards;
+    #apiModel;
 
     constructor() {
-        const headerData = ['nombre', 'apellidos', 'correo', 'teléfono', 'creado', 'acciones'];
-        this.#privateView = new IndexView(headerData);
-        this.#privateMyUsersService = new MyUsersService();
+        this.#indexView = new IndexView();
+        this.#fetchBoards = new  BoardsService();
+        this.#apiModel = new ApiModel();
     }
 
     async init() {
-        this.#privateView.Data = await this.#privateMyUsersService.getUsers();
-        this.#privateView.init();
+        const {KRELLO_URL_BASE} = Config
+        this.#apiModel = await this.#fetchBoards.findAll(KRELLO_URL_BASE);
+        const {data} = this.#apiModel
+        this.#indexView.init(data);
+    }
+
+    saveBoard(boardName) {
+        //api crear nuevo board
+        this.#fetchBoards.create(boardName)
+    }
+
+    deleteBoard(boardId){
+        this.#fetchBoards.delete(boardId)
+    }
+
+    update(boardId, newName){
+        this.#fetchBoards.update(boardId, newName)
     }
 }
-
 export const index = new IndexController();
 index.init();
