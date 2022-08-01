@@ -1,5 +1,5 @@
 'use strict';
-
+import { ColumnsController } from "../../controller/colums.controller.mjs";
 export class DetailsModal {
     #nodebody;
 
@@ -16,18 +16,41 @@ export class DetailsModal {
   Tipos de modales
 ######################################################################
 */
-    showCreateTaskModal(boardIndex, actualBoard){
+    showCreateTaskModal(actualColumn, actualBoard){
       const modalContainer = document.querySelector('.modal')
-      modalContainer.innerHTML = this.#updateDetailModalContent(taskData)
+      modalContainer.innerHTML = this.#inflateCreateTaskModal()
       
-      const myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
+      const myModal = new bootstrap.Modal(document.getElementById('containerModal'))
       myModal.show()
+
+      //listener del boton crear
+      const createBtn = document.querySelector(".create-btn")
+      createBtn.addEventListener('click',() => {
+        const columnsController = new ColumnsController();
+
+        //obtener valores del modal del modal
+        const newTaskNameNode = document.querySelector(".input-task-name")
+        const newTaskName = newTaskNameNode.value;
+
+        const deadlineDateNode = document.querySelector(".new-task-deadline")
+        const deadlineDate = deadlineDateNode.textContent;
+
+        const newTaskDescriptionNode = document.querySelector(".new-task-description")
+        const newTaskDescription = newTaskDescriptionNode.value;
+        
+
+        columnsController.createNewTask(newTaskName, newTaskDescription, actualColumn, actualBoard)
+        myModal.hide()
+      })
     }
+
+    
     showDetailsModal(taskData){
       const modalContainer = document.querySelector('.modal')
+      console.log("🚀 ~ file: datails.modal.view.mjs ~ line 50 ~ DetailsModal ~ showDetailsModal ~ modalContainer", modalContainer)
       modalContainer.innerHTML = this.#updateDetailModalContent(taskData)
       
-      const myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
+      const myModal = new bootstrap.Modal(document.getElementById('containerModal'))
       myModal.show()
     }
 
@@ -40,7 +63,7 @@ export class DetailsModal {
     #createModalContainer() {
       return `
       <!--container del modal-->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="containerModal" tabindex="-1" aria-labelledby="containerModalLabel" aria-hidden="true">
       </div>
       `
   }
@@ -49,24 +72,67 @@ export class DetailsModal {
   Modal de crear tarea
 ######################################################################
 */
-  inflateCreateTaskModal(){
+  #inflateCreateTaskModal(){
     return `
       <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="inputTextModalLabel">Crear nueva tarea</h5>
+          <h5 class="modal-title" id="newTaskModal">Crear nueva tarea</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="modal-body">
           
-          <input type="text" class="form-control input-board-name" placeholder="${placeHolder}" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <!--label nueva tarea y input-->
+          <div class="description-title-container d-flex align-items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-heading me-2" viewBox="0 0 16 16">
+          <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+          <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
+        </svg>
+                  <p class="fs-5 m-0">Titulo de la tarea</p> 
+                  
+          </div>
+          <input type="text" class="form-control input-task-name" placeholder="Nombre de la nueva tarea" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          </div>
+
+          <!--fecha de vencimiento-->
+      <div class="container-task-deadline mb-2">
+        <p class="fs-6 m-0">Vencimiento: 
+        <input type="date" id="start" style="width:24px;height:24px;" name="date-picker"
+        value="2018-07-22"
+        min="2018-01-01" max="2018-12-31">
+        </p>
+
+      <div class="deadline-date bg-danger bg-opacity-25 border d-flex rounded" style="padding: 0px 4px;width:fit-content;">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-clock align-self-center" viewBox="0 0 16 16">
+            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+          </svg>
+      <p class="deadline-date-text new-task-deadline" style="height:10px;padding-left: 6px;">??/??/???? [unknown]</p>
+      </div>
+    </div>
+
+          <!--descripcion-->
+          <div class="container-description mb-3">
+              <div class="description-title-container d-flex align-items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify-left me-2" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                  <p class="fs-5 m-0">Descripcion de la tarea</p> 
+                  
+              </div>
+              <!--campo de descripcion-->
+              <div class="form-floating">
+                  <textarea class="form-control new-task-description"  placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                  <label for="floatingTextarea2">Añade cosas especificas sobre la tarea</label>
+                </div>
           </div>
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary save-btn">${btnName}</button>
+          <button type="button" class="btn btn-primary create-btn">Crear</button>
         </div>
       </div>
     </div>

@@ -12,18 +12,23 @@ export class ColumnsView {
     this.#modal = new DetailsModal();
   }
 
-  async init(columns) {
+  async init (columns) {
     console.log("🚀 ~ file: columns.view.mjs ~ line 16 ~ ColumnsView ~ init ~ columns", columns)
     document.querySelector(".modal").remove();
     
+    //reconocer en que board estoy actualmente de la
+    const nodeBody = document.querySelector("body")
+    let actualBoard = nodeBody.getAttribute("boardSelected")
+
     //recibe contenedor de columnas
     const boardsContainer = this.#addChildFlexContainer();
-    let htmlResult = this.#addColumns(columns).join("");
+    let htmlResult = this.#addColumns( await columns, actualBoard).join("");
     boardsContainer.innerHTML = htmlResult;
     this.#modal.init();
 
     // agregar accion de click para abrir modal con info
     this.#addTaskListeners(columns);
+    this.#listenerCreateTaskBtn()
   }
 
 /*
@@ -31,7 +36,6 @@ export class ColumnsView {
   Setting Listeners
 ######################################################################
 */
-
   // para agregar el listener de una tarea del modal
   // para cuando los tenga a todos
   addTaskClickListener(node, taskData) {
@@ -43,6 +47,7 @@ export class ColumnsView {
 
   #addTaskListeners(columns) {
     console.log("🚀 ~ file: columns.view.mjs ~ line 42 ~ ColumnsView ~ #addTaskListeners ~ columns", columns)
+
     const allTaskResolve = [];
     columns.forEach((column) => {
       column.id_column.tasks_column.forEach((tasks) => {
@@ -50,16 +55,26 @@ export class ColumnsView {
       });
     });
 
+    console.log("🚀 ~ file: columns.view.mjs ~ line 57 ~ ColumnsView ~ #addTaskListeners ~ allTaskResolve", allTaskResolve)
     //obtener los ids de los tasks
+    let taskContainer;
     allTaskResolve.forEach((task) => {
-      let taskContainer = document.querySelector(`[data-task-id="${task.id}"]`);
-      // listener para injectar datos correctamente
-      taskContainer.addEventListener("click", () => {
-        const detailsModal = new DetailsModal();
-        detailsModal.showDetailsModal(task);
-      });
-    });
+      const bodyNode = document.querySelector("body")
+      const actualBoard = bodyNode.getAttribute("boardselected")
+      console.log("🚀 ~ file: columns.view.mjs ~ line 64 ~ ColumnsView ~ allTaskResolve.forEach ~ actualBoard", actualBoard)
+      console.log("🚀 ~ file: columns.view.mjs ~ line 60 ~ ColumnsView ~ allTaskResolve.forEach ~ task.board_id", task.board_id)
+      if (task.board_id == actualBoard) {
+        taskContainer = document.querySelector(`[data-task-id="${task.id}"]`);
+      console.log("🚀 ~ file: columns.view.mjs ~ line 61 ~ ColumnsView ~ allTaskResolve.forEach ~ taskContainer", taskContainer)
 
+        // listener para injectar datos correctamente
+        taskContainer.addEventListener("click", () => {
+          const detailsModal = new DetailsModal();
+          detailsModal.showDetailsModal(task);
+      });
+      }
+      
+    });
   }
 
   //listeners para botones crear tareas las
@@ -68,17 +83,20 @@ export class ColumnsView {
     createBtns.forEach((createBtn) => {
         
       createBtn.addEventListener("click", () => {
-        const columnsController = new ColumnsController()
+        //const columnsController = new ColumnsController()
+        const detailsModal = new DetailsModal();
 
         //pasa saber desde que columna se presiono el boton crear tarea
-        let boardIndex = createBtn.getAttribute("data-board-index")
+        let actualColumn = createBtn.getAttribute("data-board-index")
+        console.log("🚀 ~ file: columns.view.mjs ~ line 76 ~ ColumnsView ~ createBtn.addEventListener ~ actualColumn", actualColumn)
         
         //para saber a cual board pertenecen tales columnas y tareas
         //el board actual
         const nodeBody = document.querySelector("body")
         let actualBoard = nodeBody.getAttribute("boardSelected")
+        console.log("🚀 ~ file: columns.view.mjs ~ line 81 ~ ColumnsView ~ createBtn.addEventListener ~ actualBoard", actualBoard)
 
-        //todo aqui se va a instanciar el mostrar el modal mandando los dos anteriores valores
+        detailsModal.showCreateTaskModal(actualColumn, actualBoard)
 
       })
     })
@@ -106,11 +124,11 @@ export class ColumnsView {
     return document.querySelector(".columns-container");
   }
 
-  #addTasks(tasks) {
+  #addTasks(tasks, actualBoard) {
   console.log("🚀 ~ file: columns.view.mjs ~ line 101 ~ ColumnsView ~ #addTasks ~ tasks", tasks)
     return tasks.map((item) => {
-      return `
-        <div class="task bg-light bg-gradient border shadow-sm p-2 mb-1 rounded" draggable="true" data-task-id="${
+      if (item.board_id == actualBoard) {
+      return `<div class="task bg-light bg-gradient border shadow-sm p-2 mb-1 rounded" draggable="true" data-task-id="${
           item.id
         }">
         <p class="m-0" style="font-size:14px;">${item.name}</p>
@@ -127,12 +145,13 @@ export class ColumnsView {
             : "" /*else ternario, devuelve nada*/
         } 
     </div>
-        `;
+        `}
     });
   }
 
-  #addColumns(columns) {
-    console.log("🚀 ~ file: columns.view.mjs ~ line 134 ~ ColumnsView ~ #addColumns ~ columns", columns)
+  #addColumns(columns, actualBoard) {
+    console.log("🚀 ~ file: columns.view.mjs ~ line 153 ~ ColumnsView ~ #addColumns ~ columns", columns)
+    console.log("🚀 ~ file: columns.view.mjs ~ line 154 ~ ColumnsView ~ #addColumns ~ actualBoard", actualBoard)
     return columns.map((column, index) => {
       return `
             <div class="column-container mx-3 bg-secondary bg-opacity-10 border rounded" style="width: 272px;max-height: 600px;height:fit-content;">
@@ -148,10 +167,12 @@ export class ColumnsView {
 
                 ${
                   // mandar a agregar todas las tareas de esta columna
-                  this.#addTasks(column.id_column.tasks_column).join("") 
+                  this.#addTasks(column.id_column.tasks_column, actualBoard).join("") 
                 }
 
             </div>
+                    ${index == 0 ? 
+                      `
                 <button href="#" class="btn btn-secondary mt-1 ps-2 d-flex justify-content-between align-items-center opacity-50" style="
                     margin: 10px;
                     height: 24px;
@@ -161,7 +182,8 @@ export class ColumnsView {
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                     </svg>
                     <p class="m-0 create-task-button" data-board-index="${index}" style="padding-left:8px">Nueva tarea</p>
-                </button>
+                </button>`
+                                  : ""}
         </div>
             `;
     });
