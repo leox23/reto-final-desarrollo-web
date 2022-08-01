@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/backend/my-krello.iml" filepath="$PROJECT_DIR$/backend/my-krello.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/reto-final-desarrollo-web.iml" filepath="$PROJECT_DIR$/.idea/reto-final-desarrollo-web.iml" />
     </modules>
   </component>
 </project>
