@@ -98,12 +98,15 @@ export class BoardsView {
 
     }
 
-    #addClickListener(node, data){
+    #addClickListener(node, data, nodeBody = this.#nodeBody){
         console.log("listener aplicado, tengo en data: ");
         console.log(data);
         Array.from(node).map(function(item,index){
             item.addEventListener('click', function() {
                 const columnsController = new ColumnsController()
+                
+                //para leer el board actual desde vista columns
+                nodeBody.setAttribute("boardSelected", data[index].id)
 
                 //aqui se deben enviar todas las tareas para desestructurar
                 console.log("entre al listener y mando data[index]");

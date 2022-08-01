@@ -12,7 +12,7 @@ export class InputTextModal {
     newBoardModal(title, btnName, placeHolder){
       const modalContainer = document.querySelector('.modal')
       
-      modalContainer.innerHTML = this.#updateModalContent(title, btnName,placeHolder)
+      modalContainer.innerHTML = this.#updateDetailModalContent(title, btnName,placeHolder)
       
       const myModal = new bootstrap.Modal(document.getElementById('inputTextModal'))
       myModal.show()
@@ -31,7 +31,7 @@ export class InputTextModal {
     renameBoardModal(title, btnName, placeHolder, boardId){
       const modalContainer = document.querySelector('.modal')
       
-      modalContainer.innerHTML = this.#updateModalContent(title, btnName,placeHolder)
+      modalContainer.innerHTML = this.#updateDetailModalContent(title, btnName,placeHolder)
       
       const myModal = new bootstrap.Modal(document.getElementById('inputTextModal'))
       myModal.show()
@@ -59,7 +59,7 @@ export class InputTextModal {
       `
   }
 
-    #updateModalContent(title, btnName, placeHolder){
+    #updateDetailModalContent(title, btnName, placeHolder){
       return `
       <div class="modal-dialog">
       <div class="modal-content">

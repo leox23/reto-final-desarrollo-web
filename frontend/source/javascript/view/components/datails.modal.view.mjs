@@ -3,25 +3,40 @@
 export class DetailsModal {
     #nodebody;
 
-    #titleModal;
-
     constructor(){
       this.#nodebody = document.querySelector("body")
-      this.#titleModal = "Titulo desde atributo"
-    }
-
-    showModal(taskData){
-      const modalContainer = document.querySelector('.modal')
-      modalContainer.innerHTML = this.#updateModalContent(taskData)
-      
-      const myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
-      myModal.show()
     }
 
     init() {
       this.#nodebody.innerHTML += this.#createModalContainer()
     }
-    
+
+/*
+######################################################################
+  Tipos de modales
+######################################################################
+*/
+    showCreateTaskModal(boardIndex, actualBoard){
+      const modalContainer = document.querySelector('.modal')
+      modalContainer.innerHTML = this.#updateDetailModalContent(taskData)
+      
+      const myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
+      myModal.show()
+    }
+    showDetailsModal(taskData){
+      const modalContainer = document.querySelector('.modal')
+      modalContainer.innerHTML = this.#updateDetailModalContent(taskData)
+      
+      const myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
+      myModal.show()
+    }
+
+
+/*
+######################################################################
+  HTML content
+######################################################################
+*/
     #createModalContainer() {
       return `
       <!--container del modal-->
@@ -29,8 +44,41 @@ export class DetailsModal {
       </div>
       `
   }
+/*
+######################################################################
+  Modal de crear tarea
+######################################################################
+*/
+  inflateCreateTaskModal(){
+    return `
+      <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="inputTextModalLabel">Crear nueva tarea</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-body">
+          
+          <input type="text" class="form-control input-board-name" placeholder="${placeHolder}" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          </div>
 
-    #updateModalContent(taskData){
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary save-btn">${btnName}</button>
+        </div>
+      </div>
+    </div>
+      `
+  }
+
+/*
+######################################################################
+  Modal de detalle de tarea
+######################################################################
+*/
+    #updateDetailModalContent(taskData){
       return `
     <div class="modal-dialog">
     <div class="modal-content">
