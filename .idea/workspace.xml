@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ec3b89e8-e709-4ef0-b00b-075ae5a06c78" name="Changes" comment="ajustes" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="jhon" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/backend/mvnw" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/mvnw.cmd" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/pom.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/controller/BoardController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/controller/TaskController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/src/main/resources/application.properties" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2CXdrDe5XrxPYhQunH5ESlYinGN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "spring.configuration.checksum": "340a7ff84788d2b06043a9fc7935588d"
+  },
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+      "module"
+    ],
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="MyKrelloApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="my-krello" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.sofka.mykrello.MyKrelloApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ec3b89e8-e709-4ef0-b00b-075ae5a06c78" name="Changes" comment="" />
+      <created>1658953062443</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1658953062443</updated>
+      <workItem from="1658953070743" duration="29821000" />
+      <workItem from="1659013607634" duration="49606000" />
+      <workItem from="1659198887978" duration="5278000" />
+      <workItem from="1659290828607" duration="4943000" />
+      <workItem from="1659336063719" duration="643000" />
+    </task>
+    <task id="LOCAL-00001" summary="creacion de task servicio y domain, creacion log servicio y domain">
+      <created>1658975231967</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1658975231967</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Creacion de relacion entre task y column, muestra el tablero completo por id">
+      <created>1659020425596</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1659020425596</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Correccion Error unsuported media type, programa funcionando">
+      <created>1659027628337</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1659027628338</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Correccion Error en el create de task,creacion correcta de logs, programa funcionando">
+      <created>1659054445256</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1659054445256</updated>
+    </task>
+    <task id="LOCAL-00005" summary="creacion de logs al mover una task terminado, proyecto funcionando">
+      <created>1659067483303</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1659067483303</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Documentacion de controladores y servicios">
+      <created>1659212114837</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1659212114837</updated>
+    </task>
+    <task id="LOCAL-00007" summary="ajustes">
+      <created>1659336286558</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1659336286558</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="creacion de task servicio y domain, creacion log servicio y domain" />
+    <MESSAGE value="Creacion de relacion entre task y column, muestra el tablero completo por id" />
+    <MESSAGE value="Correccion Error unsuported media type, programa funcionando" />
+    <MESSAGE value="Correccion Error en el create de task,creacion correcta de logs, programa funcionando" />
+    <MESSAGE value="creacion de logs al mover una task terminado, proyecto funcionando" />
+    <MESSAGE value="Documentacion de controladores y servicios" />
+    <MESSAGE value="ajustes" />
+    <option name="LAST_COMMIT_MESSAGE" value="ajustes" />
+  </component>
+</project>
