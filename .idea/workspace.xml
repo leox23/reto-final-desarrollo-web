@@ -4,22 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ec3b89e8-e709-4ef0-b00b-075ae5a06c78" name="Changes" comment="mergeando ramas">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/d/1d22886aa7201ada54216e0ec354350b9ffa23df" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/6/3669b8b1182e04dac67a31a75237d1a19a4f6393" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/6/368b6236dc9999cf1df60a4f02cf7d272c48e29b" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/f/7ffd71b714294722108ce969bb508f74d28b7868" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/7/e760e54003595f210b7645e4ad0f8f80371391ae" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/BoardDomain.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/BoardDomain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/ColumnDomain.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/ColumnDomain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/LogDomain.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/LogDomain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/TaskDomain.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/TaskDomain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/service/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/domain/LogDomain.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/domain/LogDomain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/service/TaskService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/service/TaskService.class" afterDir="false" />
+    <list default="true" id="ec3b89e8-e709-4ef0-b00b-075ae5a06c78" name="Changes" comment="correccion pequeño error al borrar tablero">
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/domain/BoardDomain.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/domain/BoardDomain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/domain/ColumnDomain.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/domain/ColumnDomain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/domain/TaskDomain.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/domain/TaskDomain.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +111,7 @@
       <workItem from="1659336063719" duration="643000" />
       <workItem from="1659336752594" duration="1833000" />
       <workItem from="1659384480641" duration="7179000" />
-      <workItem from="1659402492511" duration="3168000" />
+      <workItem from="1659402492511" duration="3512000" />
     </task>
     <task id="LOCAL-00001" summary="creacion de task servicio y domain, creacion log servicio y domain">
       <created>1658975231967</created>
@@ -181,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659337147725</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="correccion pequeño error al borrar tablero">
+      <created>1659405988215</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1659405988215</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,6 +202,7 @@
     <MESSAGE value="Documentacion de controladores y servicios" />
     <MESSAGE value="ajustes" />
     <MESSAGE value="mergeando ramas" />
-    <option name="LAST_COMMIT_MESSAGE" value="mergeando ramas" />
+    <MESSAGE value="correccion pequeño error al borrar tablero" />
+    <option name="LAST_COMMIT_MESSAGE" value="correccion pequeño error al borrar tablero" />
   </component>
 </project>

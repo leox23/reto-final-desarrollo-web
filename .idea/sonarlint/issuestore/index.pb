@@ -23,3 +23,11 @@ Wbackend/src/main/java/org/sofka/mykrello/model/repository/ColumnForBoardReposit
 Nbackend/src/main/java/org/sofka/mykrello/model/repository/BoardRepository.java,b\9\b95d7d3aa0577407dc10604c3625cbebcb6d8682
 J
 resources/db/my-krello.sql,f\9\f95b1ee2a5ce413ee89a42557aa5ff4a63b86471
+w
+Gbackend/src/main/java/org/sofka/mykrello/controller/TaskController.java,9\2\92eca43597382bd46ddad2d20b7c14efc657d6b9
+}
+Mbackend/src/main/java/org/sofka/mykrello/model/repository/TaskRepository.java,5\b\5b070566c296919957be9d41a242bfcf06551292
+Œ
+\backend/src/main/java/org/sofka/mykrello/model/service/interfaces/BoardServiceInterface.java,1\d\1d22886aa7201ada54216e0ec354350b9ffa23df
+Š
+Zbackend/src/main/java/org/sofka/mykrello/model/service/interfaces/LogServiceInterface.java,3\6\3669b8b1182e04dac67a31a75237d1a19a4f6393
