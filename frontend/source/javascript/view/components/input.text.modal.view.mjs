@@ -53,7 +53,6 @@ export class InputTextModal {
     
     #createModalContainer() {
       return `
-      <!--container del modal-->
       <div class="modal fade" id="inputTextModal" tabindex="-1" aria-labelledby="inputTextModalLabel" aria-hidden="true">
       </div>
       `

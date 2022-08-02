@@ -5,7 +5,6 @@ import { IndexController } from "../../controller/index.controller.mjs";
 
 export class BoardsService {
 
-
     findAll(URL_BASE, END_POINT = "boards") {
         return fetch(URL_BASE + END_POINT).then(response => response.json());
     }
@@ -19,7 +18,6 @@ export class BoardsService {
             {method: 'DELETE'},
         )
         .then((response) => {
-            console.log(response)
             const indexController = new IndexController();
             indexController.init()
         })
@@ -27,7 +25,6 @@ export class BoardsService {
     }
 
     update(boardId, newName){
-        console.log("desde dentro de service update");
         return fetch(`http://localhost:8080/api/v1/board/${boardId}`,{
             method: 'PUT',
             body: JSON.stringify(
@@ -40,7 +37,6 @@ export class BoardsService {
             }
         })
         .then((response) => {
-            console.log(response)
             const indexController = new IndexController();
             indexController.init()
         })
@@ -62,7 +58,6 @@ export class BoardsService {
             }
         })
         .then((response) => {
-            console.log(response)
             const indexController = new IndexController();
             indexController.init()
         })
@@ -80,11 +75,6 @@ export class BoardsService {
             headers: {
                 'Content-Type': 'application/json'                
             }
-        })
-        .then((response) => {
-            console.log(response)/*
-            const indexController = new IndexController();
-            indexController.init()*/
         })
         .catch(err => console.error(err));
     }

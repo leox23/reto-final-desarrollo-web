@@ -21,6 +21,12 @@ export class IndexController {
         this.#indexView = new IndexView();
         this.#fetchBoards = new  BoardsService();
         this.#apiModel = new ApiModel();
+
+        
+        //container de section
+        const container = document.createElement('div')
+        document.querySelector("body").append(container);
+        container.id = "container"
     }
 
     async init() {

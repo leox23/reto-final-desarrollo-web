@@ -32,6 +32,10 @@ export class DetailsModal {
         const newTaskNameNode = document.querySelector(".input-task-name")
         const newTaskName = newTaskNameNode.value;
 
+        //validacion de que tenga nombre la tarea
+        if (newTaskName == ""){
+          alert("La tarea debe contener nombre obligatoriamente.")
+        }
         const deadlineDateNode = document.querySelector(".task-deadline-picker")
         const deadlineDate = deadlineDateNode.value;
 
@@ -46,7 +50,6 @@ export class DetailsModal {
 
     
     showDetailsModal(taskData, taskId){
-      console.log("🚀 ~ file: datails.modal.view.mjs ~ line 49 ~ DetailsModal ~ showDetailsModal ~ taskData", taskData)
       const modalContainer = document.querySelector('.modal')
       modalContainer.innerHTML = this.#updateDetailModalContent(taskData, taskId)
 
@@ -94,7 +97,6 @@ export class DetailsModal {
 */
     #createModalContainer() {
       return `
-      <!--container del modal-->
       <div class="modal fade" id="containerModal" tabindex="-1" aria-labelledby="containerModalLabel" aria-hidden="true">
       </div>
       `
@@ -121,7 +123,7 @@ export class DetailsModal {
           <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
           <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
         </svg>
-                  <p class="fs-5 m-0">Titulo de la tarea</p> 
+                  <p class="fs-5 m-0">Titulo de la tarea (campo obligatorio)</p> 
                   
           </div>
           <input type="text" class="form-control input-task-name" placeholder="Nombre de la nueva tarea" aria-label="Recipient's username" aria-describedby="basic-addon2">
@@ -131,7 +133,6 @@ export class DetailsModal {
       <div class="container-task-deadline  mb-2">
         <p class="fs-6 m-0">Vencimiento: 
         <input class="task-deadline-picker" type="date" id="start"  name="date-picker"
-        value="2022-08-01"
         min="2022-01-01">
         </p>
 
@@ -267,9 +268,7 @@ export class DetailsModal {
     }
 
     #addtaskLogs(logs) {
-      console.log("🚀 ~ file: datails.modal.view.mjs ~ line 270 ~ DetailsModal ~ #addtaskLogs ~ logs", logs)    
-
-      let columnsArr = ["","(1)Por realizar", "(2)En progreso", "(3)Terminado"]
+      let columnsArr = ["","Por realizar", "En progreso", "Terminado"]
       return logs.map((log, index) => {
           if (logs.length == 1){
             return `
@@ -285,8 +284,7 @@ export class DetailsModal {
             return `
             <div class="log-item p-2 mb-1 border shadow-sm rounded">
                 <p class="log-text m-0">
-                    Tarea pasa de ${columnsArr[log.previous]} 
-                    a -> ${columnsArr[log.current]}
+                    Columna anterior ${columnsArr[log.previous]} | ColumnaActual ${columnsArr[log.current]}
                 </p>
             </div>
             `

@@ -1,9 +1,6 @@
 "use strict";
 
-import { ColumnsView } from "../../view/columns.view.mjs";
-import { BoardsService } from "./boards.service.mjs";
-import { Config } from "../../config.mjs";
-
+import { ColumnsController } from "../../controller/colums.controller.mjs"
 export class TasksService {
   //pendiente por mandar deadlineDate, pero se evita porque no se tiene bien formateada aun
   createNewTask(
@@ -13,15 +10,19 @@ export class TasksService {
     actualColumn,
     actualBoard
   ) {
-    let date = new Date(deadlineDate);
-    let delivery_date = date.toISOString();
+    let delivery_date;
+    if (deadlineDate != "" && deadlineDate != null && deadlineDate != undefined){
+      let date = new Date(deadlineDate);
+      delivery_date = date.toISOString();
+    } else {
+      delivery_date = ""
+    }
     //pendiente organizar endpoint y urlbase por varibale
     return fetch(`http://localhost:8080/api/v1/newTask/${actualBoard}`, {
       method: "POST",
       body: JSON.stringify({
         name: `${newTaskName}`,
         description: `${newTaskDescription}`,
-        columID: `${actualColumn}`,
         board_id: `${actualBoard}`,
         delivery_date: `${delivery_date}`,
       }),
@@ -30,17 +31,8 @@ export class TasksService {
       },
     })
       .then((response) => {
-        console.log(response);
-
-        async function adapter() {
-          const { KRELLO_URL_BASE } = Config;
-          const boardsService = new BoardsService();
-          let apiModel = await boardsService.findAll(KRELLO_URL_BASE);
-          const { dataRaw } = apiModel;
-
-          const columnView = new ColumnsView();
-          columnView.init(await dataRaw[actualBoard]);
-        }
+        const columnsController = new ColumnsController()
+        columnsController.refreshView()
       })
       .catch((err) => console.error(err));
   }
@@ -51,9 +43,9 @@ export class TasksService {
       { method: "GET" }
     )
       .then((response) => {
-        console.log(response);
-        /*const indexController = new IndexController();
-            indexController.init()*/
+        const columnsController = new ColumnsController()
+        columnsController.refreshView()
+
       })
       .catch((err) => console.error(err));
   }
@@ -63,15 +55,19 @@ export class TasksService {
       method: "DELETE",
     })
       .then((response) => {
-        console.log(response);
         taskContainer.remove();
       })
       .catch((err) => console.error(err));
   }
 
   updateTask(taskId, newtaskTitle, newDeadLine, newDescription) {
-    let date = new Date(newDeadLine);
-    let delivery_date = date.toISOString();
+    let delivery_date;
+    if (newDeadLine != "" && newDeadLine != null && newDeadLine != undefined){
+      let date = new Date(newDeadLine);
+      delivery_date = date.toISOString();
+    } else {
+      delivery_date = ""
+    }
     //pendiente organizar endpoint y urlbase por varibale
     return fetch(`http://localhost:8080/api/v1/updateTask/${taskId}`, {
       method: "PUT",
@@ -85,8 +81,8 @@ export class TasksService {
       },
     })
       .then((response) => {
-        console.log(response);
-        console.log("Actualizado con exito");
+        const columnsController = new ColumnsController()
+        columnsController.refreshView()
       })
       .catch((err) => console.error(err));
   }

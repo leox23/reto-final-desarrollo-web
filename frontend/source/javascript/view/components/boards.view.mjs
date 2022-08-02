@@ -28,10 +28,9 @@ export class BoardsView {
         //establecer de fondo modal create board
         this.#setInputTextModal()
 
-        //todo configurar listeners del board container
+        //establecer el click en el board
         const nodes = document.querySelectorAll(".board-container")
         this.#addClickListener(nodes,data)
-        //this.#onEventBoard(data)
 
         //listener de boton create board
         const createBtn = document.querySelector(".btn-create-board")
@@ -66,7 +65,7 @@ export class BoardsView {
                 const boardId = item.getAttribute("data-board-id")
                 event.stopPropagation()
 
-                let ok = confirm("Seguro que desea eliminar talero?")
+                let ok = confirm("La eliminacion no tiene reversa\n¿Seguro que desea eliminar tablero?")
 
                 if(ok){
                     indexController.deleteBoard(boardId)
@@ -96,8 +95,13 @@ export class BoardsView {
                 //para leer el board actual desde vista columns
                 nodeBody.setAttribute("boardSelected", data[index].id)
 
+                // y para saber cual del index en el objeto se selecciono
+                nodeBody.setAttribute("objBoardIndexSelected", index)
+
                 //aqui se deben enviar todas las tareas para desestructurar
-                console.log("entre al listener y mando data[index]");
+                console.log("###antes de mandat a ColumnsControler INIT")
+                console.log("🚀 ~ file: boards.view.mjs ~ line 103 ~ BoardsView ~ item.addEventListener ~ data[index]", data[index])
+                
                 columnsController.init(data[index])
             })
         })
@@ -150,7 +154,7 @@ export class BoardsView {
         document.querySelector("#cantidad-total").innerHTML += ` <b>${data.length}</b>.`
         return data.map( (item, index) => {
             return `
-        <div id="container" class="board-container me-4 mb-5" data-index-node="${item.id}">
+        <div id="container" class="board-container me-4 pb-5 " data-index-node="${item.id}">
             <div class="card" style="width: 18rem;">
                 <img src="./images/tempGalaxi.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
