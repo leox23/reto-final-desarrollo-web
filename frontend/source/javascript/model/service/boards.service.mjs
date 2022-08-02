@@ -47,7 +47,7 @@ export class BoardsService {
         .catch(err => console.error(err));
     }
 
-    create(boardName){
+    changeTaskColumn(taskId, columnIndex){
         return fetch("http://localhost:8080/api/v1/board/", {
             method: 'POST',
             body: JSON.stringify(
@@ -60,9 +60,9 @@ export class BoardsService {
             }
         })
         .then((response) => {
-            console.log(response)
+            console.log(response)/*
             const indexController = new IndexController();
-            indexController.init()
+            indexController.init()*/
         })
         .catch(err => console.error(err));
     }

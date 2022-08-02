@@ -160,7 +160,7 @@ export class BoardsView {
     #addBoards(data) {
         return data.map( (item, index) => {
             return `
-        <div id="container" class="board-container me-4 mb-5" data-index-node="${index}">
+        <div id="container" class="board-container me-4 mb-5" data-index-node="${item.id}">
             <div class="card" style="width: 18rem;">
                 <img src="./images/tempGalaxi.jpg" class="card-img-top" alt="...">
                 <div class="card-body">

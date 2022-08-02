@@ -20,13 +20,27 @@ export class ColumnsController {
                 column.id_column.tasks_column
             ))
         })
-        console.log("🚀 ~ file: colums.controller.mjs ~ line 13 ~ ColumnsController ~ init ~ columnList", columnList)
 
         columnsView.init(columnsRaw)
     }
 
-    createNewTask(newTaskName, newTaskDescription, actualColumn, actualBoard){
+    createNewTask(newTaskName, newTaskDescription, deadlineDate, actualColumn, actualBoard){
         const taskService = new TasksService();
-        taskService.createNewTask(newTaskName, newTaskDescription, actualColumn, actualBoard)
+        taskService.createNewTask(newTaskName, newTaskDescription, deadlineDate, actualColumn, actualBoard)
+    }
+
+    changeTaskColumn(taskId, columnIndex){
+        const taskService = new TasksService();
+        taskService.updateTaskColumn(taskId, columnIndex)
+    }
+
+    deleteTaskController(taskId, taskContainer){
+        const taskService = new TasksService();
+        taskService.deleteTask(taskId, taskContainer)
+    }
+
+    modifyTask(taskId, newtaskTitle, newDeadLine, newDescription){
+        const taskService = new TasksService();
+        taskService.updateTask(taskId, newtaskTitle, newDeadLine, newDescription)
     }
 }

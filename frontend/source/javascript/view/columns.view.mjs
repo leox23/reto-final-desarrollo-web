@@ -13,7 +13,6 @@ export class ColumnsView {
   }
 
   async init (columns) {
-    console.log("🚀 ~ file: columns.view.mjs ~ line 16 ~ ColumnsView ~ init ~ columns", columns)
     document.querySelector(".modal").remove();
     
     //reconocer en que board estoy actualmente de la
@@ -29,6 +28,85 @@ export class ColumnsView {
     // agregar accion de click para abrir modal con info
     this.#addTaskListeners(columns);
     this.#listenerCreateTaskBtn()
+
+    
+    
+
+
+/*
+######################################################################
+  Configuracion drag and drop
+######################################################################
+*/
+    // estableciendo drag and drop
+    const columnContainers = document.querySelectorAll(".tasks-container")
+    columnContainers.forEach((column) => {
+      Sortable.create(column, {
+        group: 'interDragable',
+        animation: 150
+    });
+    })
+
+    const tasks = document.querySelectorAll(".task")
+    tasks.forEach((task) => {
+      task.addEventListener('dragstart', () => {
+        let taskId = task.getAttribute("data-task-id")
+        const bodyNode = document.querySelector("body")
+        bodyNode.setAttribute("dragged-task-id", taskId)
+      })
+
+      task.addEventListener('dragend', () => {
+        const bodyNode = document.querySelector("body")
+        const taskId = bodyNode.getAttribute("dragged-task-id")
+        
+        const taskNode = document.getElementById(task.id)
+
+        let parentTaskContainer = task.parentNode
+
+        const tasksContainers = document.querySelectorAll(".tasks-container")
+
+        const columnIndex = Array.prototype.indexOf.call(tasksContainers, parentTaskContainer);
+
+        const columnsController = new ColumnsController();
+        columnsController.changeTaskColumn(taskId, columnIndex + 1)
+      })
+    })
+
+
+
+
+
+/*
+######################################################################
+  Configuracion borrar tarea
+######################################################################
+*/
+//hover y on click del delete icon
+        const tasksContainers = document.querySelectorAll(".task")
+        const deleteIcon = document.querySelectorAll(".delete-icon")
+        tasksContainers.forEach((taskContainer, index) => {
+            deleteIcon[index].style.visibility = "hidden";
+            deleteIcon[index].addEventListener("click", (event) => { 
+              event.stopPropagation()
+              let taskId = deleteIcon[index].getAttribute("data-task-id")
+
+              const columnController = new ColumnsController()
+              columnController.deleteTaskController(taskId, taskContainer)
+            })
+
+            taskContainer.addEventListener("mouseover", () => { 
+              deleteIcon[index].style.visibility = "visible";
+            })
+            
+            taskContainer.addEventListener("mouseout", () => { 
+              deleteIcon[index].style.visibility = "hidden";
+            })
+        })
+        
+
+
+
+
   }
 
 /*
@@ -46,8 +124,6 @@ export class ColumnsView {
   }
 
   #addTaskListeners(columns) {
-    console.log("🚀 ~ file: columns.view.mjs ~ line 42 ~ ColumnsView ~ #addTaskListeners ~ columns", columns)
-
     const allTaskResolve = [];
     columns.forEach((column) => {
       column.id_column.tasks_column.forEach((tasks) => {
@@ -55,25 +131,21 @@ export class ColumnsView {
       });
     });
 
-    console.log("🚀 ~ file: columns.view.mjs ~ line 57 ~ ColumnsView ~ #addTaskListeners ~ allTaskResolve", allTaskResolve)
     //obtener los ids de los tasks
     let taskContainer;
     allTaskResolve.forEach((task) => {
       const bodyNode = document.querySelector("body")
       const actualBoard = bodyNode.getAttribute("boardselected")
-      console.log("🚀 ~ file: columns.view.mjs ~ line 64 ~ ColumnsView ~ allTaskResolve.forEach ~ actualBoard", actualBoard)
       console.log("🚀 ~ file: columns.view.mjs ~ line 60 ~ ColumnsView ~ allTaskResolve.forEach ~ task.board_id", task.board_id)
       if (task.board_id == actualBoard) {
         taskContainer = document.querySelector(`[data-task-id="${task.id}"]`);
-      console.log("🚀 ~ file: columns.view.mjs ~ line 61 ~ ColumnsView ~ allTaskResolve.forEach ~ taskContainer", taskContainer)
 
         // listener para injectar datos correctamente
         taskContainer.addEventListener("click", () => {
           const detailsModal = new DetailsModal();
-          detailsModal.showDetailsModal(task);
+          detailsModal.showDetailsModal(task,task.id);
       });
       }
-      
     });
   }
 
@@ -88,13 +160,11 @@ export class ColumnsView {
 
         //pasa saber desde que columna se presiono el boton crear tarea
         let actualColumn = createBtn.getAttribute("data-board-index")
-        console.log("🚀 ~ file: columns.view.mjs ~ line 76 ~ ColumnsView ~ createBtn.addEventListener ~ actualColumn", actualColumn)
         
         //para saber a cual board pertenecen tales columnas y tareas
         //el board actual
         const nodeBody = document.querySelector("body")
         let actualBoard = nodeBody.getAttribute("boardSelected")
-        console.log("🚀 ~ file: columns.view.mjs ~ line 81 ~ ColumnsView ~ createBtn.addEventListener ~ actualBoard", actualBoard)
 
         detailsModal.showCreateTaskModal(actualColumn, actualBoard)
 
@@ -108,7 +178,6 @@ export class ColumnsView {
   HTML content
 ######################################################################
 */
-
   #addChildFlexContainer() {
     const childContainer = document.createElement("div");
     document.querySelector("#container").innerHTML = "";
@@ -125,13 +194,19 @@ export class ColumnsView {
   }
 
   #addTasks(tasks, actualBoard) {
-  console.log("🚀 ~ file: columns.view.mjs ~ line 101 ~ ColumnsView ~ #addTasks ~ tasks", tasks)
-    return tasks.map((item) => {
+    return tasks.map((item, index) => {
       if (item.board_id == actualBoard) {
-      return `<div class="task bg-light bg-gradient border shadow-sm p-2 mb-1 rounded" draggable="true" data-task-id="${
+
+      return `<div class="task bg-light bg-gradient border shadow-sm p-2 mb-1 rounded" id="taskNodeId${index}" draggable="true" data-task-id="${
           item.id
         }">
-        <p class="m-0" style="font-size:14px;">${item.name}</p>
+        <div class="container d-flex justify-content-between align-content-center">
+          <p class="m-0" style="font-size:14px;">${item.name}</p> 
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash delete-icon"  data-task-id="${item.id}" viewBox="0 0 16 16">
+  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+</svg>
+        </div>
 
         ${
           item.delivery_date != null
@@ -150,11 +225,9 @@ export class ColumnsView {
   }
 
   #addColumns(columns, actualBoard) {
-    console.log("🚀 ~ file: columns.view.mjs ~ line 153 ~ ColumnsView ~ #addColumns ~ columns", columns)
-    console.log("🚀 ~ file: columns.view.mjs ~ line 154 ~ ColumnsView ~ #addColumns ~ actualBoard", actualBoard)
     return columns.map((column, index) => {
       return `
-            <div class="column-container mx-3 bg-secondary bg-opacity-10 border rounded" style="width: 272px;max-height: 600px;height:fit-content;">
+            <div class="column-container mx-3 bg-secondary bg-opacity-10 border rounded" style="width: 272px;height:fit-content;">
                 <div class="container d-flex flex-row justify-content-between p-2">
                     <h6 class="align-self-center m-0">${column.id_column.name}</h6>
                     <button type="button" style="height:25px;padding:0px 6px;" class="btn btn-light align-self-center">
@@ -163,7 +236,7 @@ export class ColumnsView {
                         </svg>
                     </button>
                 </div>
-                <div class="tasks-container p-2">
+                <div class="tasks-container p-2" style="max-height:400px;overflow-y: auto;" id="column${index}">
 
                 ${
                   // mandar a agregar todas las tareas de esta columna
