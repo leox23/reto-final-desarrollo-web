@@ -1,7 +1,0 @@
-
-l	java:S116D"WRename this field "tasks_column" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øëÎ¹
-X	java:S1258"<This block of commented-out lines of code should be removed.(µË®8äŠ¸·¤0
-Z
-java:S1128"8Remove this unused import 'javax.persistence.Transient'.(Õ„¹ùÿÿÿÿÿ8æŠ¸·¤0
-o
-java:S1128"RRemove this unused import 'com.fasterxml.jackson.annotation.JsonIgnoreProperties'.(ô’ˆî8®³…³¤0

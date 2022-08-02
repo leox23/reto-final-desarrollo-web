@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -26,7 +27,7 @@ import lombok.Data;
 @Table(name = "krl_board")
 public class BoardDomain implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+       private static final long serialVersionUID = 1L;
 
     @PreUpdate
     public void preUpdate() {
@@ -47,6 +48,8 @@ public class BoardDomain implements Serializable {
 
     @Column(name = "brd_updated_at")
     private Instant updatedAt;
+
+
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, targetEntity = ColumnForBoardDomain.class, cascade = CascadeType.ALL, mappedBy = "board")

@@ -41,8 +41,6 @@ public class LogDomain implements Serializable {
     @JsonBackReference(value = "task_id")
     private TaskDomain task_id;
 
-
-
     @Column(name = "log_created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
 }

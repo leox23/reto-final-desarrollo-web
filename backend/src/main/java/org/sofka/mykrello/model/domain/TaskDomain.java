@@ -55,7 +55,7 @@ public class TaskDomain implements Serializable {
     @Column(name = "brd_id_board")
     private Integer board_id;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "clm_id_column", referencedColumnName = "clm_id", nullable = false,insertable = false,updatable = false)
     @JsonBackReference("task_column")
     private ColumnDomain column;
