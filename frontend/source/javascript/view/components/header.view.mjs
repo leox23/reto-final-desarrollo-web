@@ -1,23 +1,30 @@
-'use strict'
+"use strict";
 
-import { BoardsView } from "./boards.view.mjs";
-import { IndexController } from "../../controller/index.controller.mjs";
-
+/**
+ * La parte superior de la vista de la aplicacion
+ */
 export class Header {
-    #logoPath;
-    #body;
+  #logoPath;
+  #body;
 
-    constructor () {
-        this.#logoPath = "./images/krello-logo.svg"
-        this.#body = document.querySelector('body')
-    }
+  constructor() {
+    this.#logoPath = "./images/krello-logo.svg";
+    this.#body = document.querySelector("body");
+  }
 
-    init(){
-        this.#body.innerHTML = this.#contentHeader()
-    }
+  /**
+   * Meter el contenido del header en el Body
+   */
+  init() {
+    this.#body.innerHTML = this.#contentHeader();
+  }
 
-    #contentHeader(){
-        return `<div class="container-fluid w-100 ps-5 mb-4 d-flex align-items-center" style="
+  /**
+   * Metodo para estructurar header
+   * @returns el contenido html del header
+   */
+  #contentHeader() {
+    return `<div class="container-fluid w-100 ps-5 mb-4 d-flex align-items-center" style="
         height:80px;
         border-bottom:2px solid #F7F7F7;
         background: rgb(255,255,255);
@@ -31,9 +38,7 @@ export class Header {
                 <h1 class="ms-3">Krello</h1>
             </div> 
         </a>
-            
-        
         </div>
-        `
-    }
+        `;
+  }
 }

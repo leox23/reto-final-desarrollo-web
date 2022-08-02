@@ -1,110 +1,154 @@
-'use strict';
+"use strict";
 import { ColumnsController } from "../../controller/colums.controller.mjs";
+
+/**
+ * Clase que contiene lo relacionado a los modales de la vista Columns, y los task
+ */
 export class DetailsModal {
-    #nodebody;
+  #nodebody;
 
-    constructor(){
-      this.#nodebody = document.querySelector("body")
-    }
+  constructor() {
+    this.#nodebody = document.querySelector("body");
+  }
+  /**
+   * Al entrar a la vista columnas se instancia el contenedor  del modal de dicha vista para hacerlos aparecer cuando sea necesario
+   */
+  init() {
+    this.#nodebody.innerHTML += this.#createModalContainer();
+  }
 
-    init() {
-      this.#nodebody.innerHTML += this.#createModalContainer()
-    }
-
-/*
+  /*
 ######################################################################
   Tipos de modales
 ######################################################################
 */
-    showCreateTaskModal(actualColumn, actualBoard){
-      const modalContainer = document.querySelector('.modal')
-      modalContainer.innerHTML = this.#inflateCreateTaskModal()
-      
-      const myModal = new bootstrap.Modal(document.getElementById('containerModal'))
-      myModal.show()
+  /**
+   * Metodo que contiene el modal para crear una tarea
+   */
+  showCreateTaskModal(actualColumn, actualBoard) {
+    const modalContainer = document.querySelector(".modal");
+    modalContainer.innerHTML = this.#inflateCreateTaskModal();
 
-      //listener del boton crear
-      const createBtn = document.querySelector(".create-btn")
-      createBtn.addEventListener('click',() => {
-        const columnsController = new ColumnsController();
+    const myModal = new bootstrap.Modal(
+      document.getElementById("containerModal")
+    );
+    myModal.show();
 
-        //obtener valores del modal del modal
-        const newTaskNameNode = document.querySelector(".input-task-name")
-        const newTaskName = newTaskNameNode.value;
+    //listener del boton crear
+    const createBtn = document.querySelector(".create-btn");
+    createBtn.addEventListener("click", () => {
+      const columnsController = new ColumnsController();
 
-        const deadlineDateNode = document.querySelector(".task-deadline-picker")
-        const deadlineDate = deadlineDateNode.value;
+      //obtener valores del modal del modal
+      const newTaskNameNode = document.querySelector(".input-task-name");
+      const newTaskName = newTaskNameNode.value;
 
-        const newTaskDescriptionNode = document.querySelector(".new-task-description")
-        const newTaskDescription = newTaskDescriptionNode.value;
-        
+      //validacion de que tenga nombre la tarea
+      if (newTaskName == "") {
+        alert("La tarea debe contener nombre obligatoriamente.");
+      }
+      const deadlineDateNode = document.querySelector(".task-deadline-picker");
+      const deadlineDate = deadlineDateNode.value;
 
-        columnsController.createNewTask(newTaskName, newTaskDescription, deadlineDate, actualColumn, actualBoard)
-        myModal.hide()
-      })
-    }
+      const newTaskDescriptionNode = document.querySelector(
+        ".new-task-description"
+      );
+      const newTaskDescription = newTaskDescriptionNode.value;
 
-    
-    showDetailsModal(taskData, taskId){
-      console.log("🚀 ~ file: datails.modal.view.mjs ~ line 49 ~ DetailsModal ~ showDetailsModal ~ taskData", taskData)
-      const modalContainer = document.querySelector('.modal')
-      modalContainer.innerHTML = this.#updateDetailModalContent(taskData, taskId)
+      columnsController.createNewTask(
+        newTaskName,
+        newTaskDescription,
+        deadlineDate,
+        actualColumn,
+        actualBoard
+      );
+      myModal.hide();
+    });
+  }
 
-      const myModal = new bootstrap.Modal(document.getElementById('containerModal'))
-      myModal.show()
-      
+  /**
+   * Metodo para mostrar con los detalles de la tarea y para modificarlos
+   * @param  taskData Key donde estas las tareas y sus atributos
+   * @param {*} taskId el id de la tarea  enviada
+   */
+  showDetailsModal(taskData, taskId) {
+    const modalContainer = document.querySelector(".modal");
+    modalContainer.innerHTML = this.#updateDetailModalContent(taskData, taskId);
 
-/*
+    const myModal = new bootstrap.Modal(
+      document.getElementById("containerModal")
+    );
+    myModal.show();
+
+    /*
 ######################################################################
   Listeners de modal details
 ######################################################################
 */
-      //listener para cambiar titulo de tarea a nombre de tarea editable
-      const taskTitle = document.getElementById("taskTitleModalLabel")
-      taskTitle.addEventListener('click', () => {
-        let newTaskName = prompt("Coloca el nuevo nombre de tu tarea. (recuerda presionar el boton guardar)")
+    /**
+     * Listener para cambiar titulo de tarea a nombre de tarea editable
+     */
+    const taskTitle = document.getElementById("taskTitleModalLabel");
+    taskTitle.addEventListener("click", () => {
+      let newTaskName = prompt(
+        "Coloca el nuevo nombre de tu tarea. (recuerda presionar el boton guardar)"
+      );
 
-        if (newTaskName != null && newTaskName != "" && newTaskName != undefined){
-          taskTitle.textContent = newTaskName
-        }
+      if (
+        newTaskName != null &&
+        newTaskName != "" &&
+        newTaskName != undefined
+      ) {
+        taskTitle.textContent = newTaskName;
+      }
+    });
 
-      })
-      
+    //listener boton guardar
+    const saveBtn = document.querySelector(".save-btn");
+    saveBtn.addEventListener("click", () => {
+      const newtaskTitle = document.getElementById(
+        "taskTitleModalLabel"
+      ).textContent;
+      const newDeadLine = document.getElementById("start").value;
+      const newDescription = document.querySelector(
+        ".new-edit-description"
+      ).value;
+      myModal.hide();
 
-      //listener boton guardar
-      const saveBtn = document.querySelector(".save-btn")
-      saveBtn.addEventListener('click',() => {
-        const newtaskTitle = document.getElementById("taskTitleModalLabel").textContent
-        const newDeadLine = document.getElementById("start").value
-        const newDescription = document.querySelector(".new-edit-description").value
-        //attr data-task-id
-        myModal.hide()
+      const columnsController = new ColumnsController();
+      columnsController.modifyTask(
+        taskId,
+        newtaskTitle,
+        newDeadLine,
+        newDescription
+      );
+    });
+  }
 
-        const columnsController = new ColumnsController()
-        columnsController.modifyTask(taskId, newtaskTitle, newDeadLine, newDescription)
-        
-      })
-    }
-
-
-/*
+  /*
 ######################################################################
   HTML content
 ######################################################################
-*/
-    #createModalContainer() {
-      return `
-      <!--container del modal-->
+*/ /**
+   * Metodo para estructurar el contenido de el container del modal
+   * @returns El html del container del modal de la vista columnas y tareas
+   */
+  #createModalContainer() {
+    return `
       <div class="modal fade" id="containerModal" tabindex="-1" aria-labelledby="containerModalLabel" aria-hidden="true">
       </div>
-      `
+      `;
   }
-/*
+  /*
 ######################################################################
   Modal de crear tarea
 ######################################################################
 */
-  #inflateCreateTaskModal(){
+  /**
+   * Metodo para estructurar el contenido de html del modal crear tareas
+   * @returns El contenido html del modal para crear tareas
+   */
+  #inflateCreateTaskModal() {
     return `
       <div class="modal-dialog">
       <div class="modal-content">
@@ -121,7 +165,7 @@ export class DetailsModal {
           <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
           <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
         </svg>
-                  <p class="fs-5 m-0">Titulo de la tarea</p> 
+                  <p class="fs-5 m-0">Titulo de la tarea (campo obligatorio)</p> 
                   
           </div>
           <input type="text" class="form-control input-task-name" placeholder="Nombre de la nueva tarea" aria-label="Recipient's username" aria-describedby="basic-addon2">
@@ -131,10 +175,8 @@ export class DetailsModal {
       <div class="container-task-deadline  mb-2">
         <p class="fs-6 m-0">Vencimiento: 
         <input class="task-deadline-picker" type="date" id="start"  name="date-picker"
-        value="2022-08-01"
         min="2022-01-01">
         </p>
-
 
           <!--descripcion-->
           <div class="container-description mb-3">
@@ -159,16 +201,23 @@ export class DetailsModal {
         </div>
       </div>
     </div>
-      `
+      `;
   }
 
-/*
+  /*
 ######################################################################
   Modal de detalle de tarea
 ######################################################################
 */
-    #updateDetailModalContent(taskData, taskId){
-      return `
+
+  /**
+   * Metodo para estructurar el contenido del modal de detalle y edicion de tarea
+   * @param taskData Datos de la tarea seleccionada
+   * @param taskId Id de la tarea seleccionada
+   * @returns 
+   */
+  #updateDetailModalContent(taskData, taskId) {
+    return `
     <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -196,7 +245,9 @@ export class DetailsModal {
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar mt-1" viewBox="0 0 16 16">
           <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
         </svg>
-      <p class="deadline-date-text" style="height:10px;padding-left: 6px;">${taskData.createdAt}</p>
+      <p class="deadline-date-text" style="height:10px;padding-left: 6px;">${
+        taskData.createdAt
+      }</p>
       </div>
     </div>
           
@@ -210,15 +261,16 @@ export class DetailsModal {
         </p>
 
       <div class="deadline-date bg-danger bg-opacity-25 border d-flex rounded" style="padding: 0px 4px;width:fit-content;cursor:pointer;">
-        ${taskData.delivery_date ? 
-        `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-clock align-self-center" viewBox="0 0 16 16">
+        ${
+          taskData.delivery_date
+            ? `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-clock align-self-center" viewBox="0 0 16 16">
             <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
           </svg>
       <p class="deadline-date-text date-expire" style="height:10px;padding-left: 6px;">${taskData.delivery_date}</p>
       </div>`
-          :  ""
-    }
+            : ""
+        }
 
     </div>
         
@@ -233,7 +285,9 @@ export class DetailsModal {
               </div>
               <!--campo de descripcion-->
               <div class="form-floating">
-                  <textarea class="form-control new-edit-description"  placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">${taskData.description ? taskData.description : ''}</textarea>
+                  <textarea class="form-control new-edit-description"  placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">${
+                    taskData.description ? taskData.description : ""
+                  }</textarea>
                   <label for="floatingTextarea2">Añade cosas especificas sobre la tarea</label>
                 </div>
           </div>
@@ -252,7 +306,11 @@ export class DetailsModal {
           </div>
           <!--log items-->
           <div class="logs-container" style="max-height:150px;overflow:auto;">
-              ${taskData.log_task_id ? this.#addtaskLogs(taskData.log_task_id).join("") : ""}
+              ${
+                taskData.log_task_id
+                  ? this.#addtaskLogs(taskData.log_task_id).join("")
+                  : ""
+              }
           </div>
       </div>
 
@@ -263,36 +321,38 @@ export class DetailsModal {
             </div>
           </div>
         </div>
-            `
-    }
+            `;
+  }
 
-    #addtaskLogs(logs) {
-      console.log("🚀 ~ file: datails.modal.view.mjs ~ line 270 ~ DetailsModal ~ #addtaskLogs ~ logs", logs)    
-
-      let columnsArr = ["","(1)Por realizar", "(2)En progreso", "(3)Terminado"]
-      return logs.map((log, index) => {
-          if (logs.length == 1){
-            return `
+  /**
+   * Metodo para estructurar el contenido de los logs del modal detalle de tarea
+   * @param logs Logs pertenecientes a la tarea
+   * @returns El contenido html del los logs ordenados
+   */
+  #addtaskLogs(logs) {
+    let columnsArr = ["", "Por realizar", "En progreso", "Terminado"];
+    return logs.map((log, index) => {
+      if (logs.length == 1) {
+        return `
             <div class="log-item p-2 mb-1 border shadow-sm rounded">
                 <p class="log-text m-0">
                     La tarea ha permanecido en ${columnsArr[log.current]}
                 </p>
             </div>
-            `
-          } else if ( index == 0 ){
-            return ""
-          } else {
-            return `
+            `;
+      } else if (index == 0) {
+        return "";
+      } else {
+        return `
             <div class="log-item p-2 mb-1 border shadow-sm rounded">
                 <p class="log-text m-0">
-                    Tarea pasa de ${columnsArr[log.previous]} 
-                    a -> ${columnsArr[log.current]}
+                    Columna anterior ${
+                      columnsArr[log.previous]
+                    } | ColumnaActual ${columnsArr[log.current]}
                 </p>
             </div>
-            `
-          }
-      })
-
-    }
-
+            `;
+      }
+    });
+  }
 }

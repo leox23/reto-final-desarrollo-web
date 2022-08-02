@@ -13,106 +13,107 @@ export class ColumnsView {
     this.#modal = new DetailsModal();
   }
 
-  async init (columns) {
-    document.querySelector(".modal").remove();
-
+  init(columns) {
+    try {
+      //quitando modal anterior
+      document.querySelector(".modal").remove();
+    } catch (error) {
+      console.log(error);
+    }
     //listener de logo de app para ir a index
-    const logo = document.querySelector("#goHome")
+    const logo = document.querySelector("#goHome");
     logo.addEventListener("click", () => {
       const indexController = new IndexController();
-        indexController.init();
-    })
-    
+      indexController.init();
+    });
+
     //reconocer en que board estoy actualmente de la
-    const nodeBody = document.querySelector("body")
-    let actualBoard = nodeBody.getAttribute("boardSelected")
+    const nodeBody = document.querySelector("body");
+    let actualBoard = nodeBody.getAttribute("boardSelected");
 
     //recibe contenedor de columnas
     const boardsContainer = this.#addChildFlexContainer();
-    let htmlResult = this.#addColumns( await columns, actualBoard).join("");
+    let htmlResult = this.#addColumns(columns, actualBoard).join("");
     boardsContainer.innerHTML = htmlResult;
     this.#modal.init();
 
     // agregar accion de click para abrir modal con info
     this.#addTaskListeners(columns);
-    this.#listenerCreateTaskBtn()
+    this.#listenerCreateTaskBtn();
 
-    
-/*
+    /*
 ######################################################################
   Configuracion drag and drop
 ######################################################################
 */
     // estableciendo drag and drop
-    const columnContainers = document.querySelectorAll(".tasks-container")
+    const columnContainers = document.querySelectorAll(".tasks-container");
     columnContainers.forEach((column) => {
       Sortable.create(column, {
-        group: 'interDragable',
-        animation: 150
+        group: "interDragable",
+        animation: 150,
+      });
     });
-    })
 
-    const tasks = document.querySelectorAll(".task")
+    const tasks = document.querySelectorAll(".task");
     tasks.forEach((task) => {
-      task.addEventListener('dragstart', () => {
-        let taskId = task.getAttribute("data-task-id")
-        const bodyNode = document.querySelector("body")
-        bodyNode.setAttribute("dragged-task-id", taskId)
-      })
+      task.addEventListener("dragstart", () => {
+        let taskId = task.getAttribute("data-task-id");
+        const bodyNode = document.querySelector("body");
+        bodyNode.setAttribute("dragged-task-id", taskId);
+      });
 
-      task.addEventListener('dragend', () => {
-        const bodyNode = document.querySelector("body")
-        const taskId = bodyNode.getAttribute("dragged-task-id")
+      task.addEventListener("dragend", () => {
+        const bodyNode = document.querySelector("body");
+        const taskId = bodyNode.getAttribute("dragged-task-id");
 
-        let parentTaskContainer = task.parentNode
+        let parentTaskContainer = task.parentNode;
 
-        const tasksContainers = document.querySelectorAll(".tasks-container")
-
-        const columnIndex = Array.prototype.indexOf.call(tasksContainers, parentTaskContainer);
+        const columnIndex = Array.prototype.indexOf.call(
+          columnContainers,
+          parentTaskContainer
+        );
 
         const columnsController = new ColumnsController();
-        columnsController.changeTaskColumn(taskId, columnIndex + 1)
-      })
-    })
+        columnsController.changeTaskColumn(taskId, columnIndex + 1);
+      });
+    });
 
-
-
-
-
-/*
+    /*
 ######################################################################
   Configuracion borrar tarea
 ######################################################################
 */
-//hover y on click del delete icon
-        const tasksContainers = document.querySelectorAll(".task")
-        const deleteIcon = document.querySelectorAll(".delete-icon")
-        tasksContainers.forEach((taskContainer, index) => {
-            deleteIcon[index].style.visibility = "hidden";
-            deleteIcon[index].addEventListener("click", (event) => { 
-              event.stopPropagation()
-              let taskId = deleteIcon[index].getAttribute("data-task-id")
+    //hover y on click del delete icon
+    const tasksContainers = document.querySelectorAll(".task");
+    const deleteIcon = document.querySelectorAll(".delete-icon");
+    tasksContainers.forEach((taskContainer, index) => {
+      deleteIcon[index].style.visibility = "hidden";
+      deleteIcon[index].addEventListener("click", (event) => {
+        event.stopPropagation();
+        let taskId = deleteIcon[index].getAttribute("data-task-id");
 
-              const columnController = new ColumnsController()
-              columnController.deleteTaskController(taskId, taskContainer)
-            })
+        let ok = confirm(
+          "Esto no tiene reversa\n¿Seguro que quiere eliminar la tarea?"
+        );
 
-            taskContainer.addEventListener("mouseover", () => { 
-              deleteIcon[index].style.visibility = "visible";
-            })
-            
-            taskContainer.addEventListener("mouseout", () => { 
-              deleteIcon[index].style.visibility = "hidden";
-            })
-        })
-        
+        if (ok) {
+          const columnController = new ColumnsController();
+          columnController.deleteTaskController(taskId, taskContainer);
+        }
+      });
 
+      taskContainer.addEventListener("mouseover", () => {
+        deleteIcon[index].style.visibility = "visible";
+      });
 
-
-
+      taskContainer.addEventListener("mouseout", () => {
+        deleteIcon[index].style.visibility = "hidden";
+      });
+    });
   }
 
-/*
+  /*
 ######################################################################
   Setting Listeners
 ######################################################################
@@ -129,7 +130,7 @@ export class ColumnsView {
   #addTaskListeners(columns) {
     const allTaskResolve = [];
     columns.forEach((column) => {
-      column.id_column.tasks_column.forEach((tasks) => {
+      column.tasks.forEach((tasks) => {
         allTaskResolve.push(tasks);
       });
     });
@@ -137,52 +138,59 @@ export class ColumnsView {
     //obtener los ids de los tasks
     let taskContainer;
     allTaskResolve.forEach((task) => {
-      const bodyNode = document.querySelector("body")
-      const actualBoard = bodyNode.getAttribute("boardselected")
+      const bodyNode = document.querySelector("body");
+      const actualBoard = bodyNode.getAttribute("boardselected");
       if (task.board_id == actualBoard) {
         taskContainer = document.querySelector(`[data-task-id="${task.id}"]`);
 
         // listener para injectar datos correctamente
         taskContainer.addEventListener("click", () => {
           const detailsModal = new DetailsModal();
-          detailsModal.showDetailsModal(task,task.id);
-      });
+          detailsModal.showDetailsModal(task, task.id);
+        });
       }
     });
   }
 
   //listeners para botones crear tareas las
-  #listenerCreateTaskBtn(){
-    const createBtns = document.querySelectorAll(".create-task-button")
+  #listenerCreateTaskBtn() {
+    const createBtns = document.querySelectorAll(".create-task-button");
     createBtns.forEach((createBtn) => {
-        
       createBtn.addEventListener("click", () => {
-        //const columnsController = new ColumnsController()
         const detailsModal = new DetailsModal();
 
         //pasa saber desde que columna se presiono el boton crear tarea
-        let actualColumn = createBtn.getAttribute("data-board-index")
-        
+        let actualColumn = createBtn.getAttribute("data-board-index");
+
         //para saber a cual board pertenecen tales columnas y tareas
         //el board actual
-        const nodeBody = document.querySelector("body")
-        let actualBoard = nodeBody.getAttribute("boardSelected")
+        const nodeBody = document.querySelector("body");
+        let actualBoard = nodeBody.getAttribute("boardSelected");
 
-        detailsModal.showCreateTaskModal(actualColumn, actualBoard)
-
-      })
-    })
-    
+        detailsModal.showCreateTaskModal(actualColumn, actualBoard);
+      });
+    });
   }
 
-/*
+  /*
 ######################################################################
   HTML content
 ######################################################################
 */
   #addChildFlexContainer() {
+    //document.querySelector("#container").innerHTML = "";
     const childContainer = document.createElement("div");
-    document.querySelector("#container").innerHTML = "";
+
+    try {
+      //vaciar contenedor
+      document.querySelector("#container").innerHTML = "";
+    } catch (error) {
+      console.log(error);
+      // crea el container
+      const container = document.createElement("div");
+      document.querySelector("body").append(container);
+      container.id = "container";
+    }
     document.querySelector("#container").appendChild(childContainer);
     childContainer.classList.add(
       "container",
@@ -198,13 +206,14 @@ export class ColumnsView {
   #addTasks(tasks, actualBoard) {
     return tasks.map((item, index) => {
       if (item.board_id == actualBoard) {
-
-      return `<div class="task bg-light bg-gradient border shadow-sm p-2 mb-1 rounded" id="taskNodeId${index}" draggable="true" data-task-id="${
+        return `<div class="task bg-light bg-gradient border shadow-sm p-2 mb-1 rounded" id="taskNodeId${index}" draggable="true" data-task-id="${
           item.id
         }">
         <div class="container d-flex justify-content-between align-content-center">
           <p class="m-0" style="font-size:14px;">${item.name}</p> 
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash delete-icon"  data-task-id="${item.id}" viewBox="0 0 16 16">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash delete-icon"  data-task-id="${
+            item.id
+          }" viewBox="0 0 16 16">
   <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
 </svg>
@@ -222,7 +231,8 @@ export class ColumnsView {
             : "" /*else ternario, devuelve nada*/
         } 
     </div>
-        `}
+        `;
+      }
     });
   }
 
@@ -231,7 +241,7 @@ export class ColumnsView {
       return `
             <div class="column-container mx-3 bg-secondary bg-opacity-10 border rounded" style="width: 272px;height:fit-content;">
                 <div class="container d-flex flex-row justify-content-between p-2">
-                    <h6 class="align-self-center m-0">${column.id_column.name}</h6>
+                    <h6 class="align-self-center m-0">${column.name}</h6>
                     <button type="button" style="height:25px;padding:0px 6px;" class="btn btn-light align-self-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="15" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                         <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
@@ -242,12 +252,13 @@ export class ColumnsView {
 
                 ${
                   // mandar a agregar todas las tareas de esta columna
-                  this.#addTasks(column.id_column.tasks_column, actualBoard).join("") 
+                  this.#addTasks(column.tasks, actualBoard).join("")
                 }
 
             </div>
-                    ${index == 0 ? 
-                      `
+                    ${
+                      index == 0
+                        ? `
                 <button href="#" class="btn btn-secondary mt-1 ps-2 d-flex justify-content-between align-items-center opacity-50" style="
                     margin: 10px;
                     height: 24px;
@@ -258,7 +269,8 @@ export class ColumnsView {
                     </svg>
                     <p class="m-0 create-task-button" data-board-index="${index}" style="padding-left:8px">Nueva tarea</p>
                 </button>`
-                                  : ""}
+                        : ""
+                    }
         </div>
             `;
     });

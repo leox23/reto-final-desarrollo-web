@@ -1,125 +1,150 @@
-'use strict';
+"use strict";
 
 import { InputTextModal } from "./input.text.modal.view.mjs";
 import { ColumnsController } from "../../controller/colums.controller.mjs";
 import { IndexController } from "../../controller/index.controller.mjs";
 
+/**
+ * Clase que posee todo lo relacionado a la vista Boards
+ */
 export class BoardsView {
-    #nodeBody;
-    #columsController;
+  #nodeBody;
+  #columsController;
 
-    constructor() {        
-        this.#nodeBody = document.querySelector('body')
-        this.#columsController = new ColumnsController()
-    }
+  constructor() {
+    this.#nodeBody = document.querySelector("body");
+    this.#columsController = new ColumnsController();
+  }
 
-    init(data) {
-        //container de section
-        const container = this.#createContainer()
-        this.#nodeBody.append(container);
+  /**
+   * Punto de entrada para la vista de los tableros
+   * @param {ApiModel} data
+   */
+  init(data) {
+    //container de section
+    const container = this.#createContainer();
+    this.#nodeBody.append(container);
 
-        //agregar titulo y container de boards
-        container.innerHTML = this.#addTitleSection()
-        container.id = "container"
+    //agregar titulo y container de boards
+    container.innerHTML = this.#addTitleSection();
+    container.id = "container";
 
-        //agregar boton crear y boards a sus containers
-        document.querySelector('.all-boards').innerHTML = this.#addButtonInputText() + this.#addBoards(data).join('')
-        
-        //establecer de fondo modal create board
-        this.#setInputTextModal()
+    //agregar boton crear y boards a sus containers
+    document.querySelector(".all-boards").innerHTML =
+      this.#addButtonCreateBoard() + this.#addBoards(data).join("");
 
-        //todo configurar listeners del board container
-        const nodes = document.querySelectorAll(".board-container")
-        this.#addClickListener(nodes,data)
-        //this.#onEventBoard(data)
+    //establecer de fondo modal create board
+    this.#setInputTextModal();
 
-        //listener de boton create board
-        const createBtn = document.querySelector(".btn-create-board")
-        createBtn.addEventListener('click', function() {
-            const inputTextModal = new InputTextModal();
-            inputTextModal.newBoardModal("Nuevo tablero", "Crear", "Nombre del tablero")
-        })
+    //establecer el click en el board
+    const nodes = document.querySelectorAll(".board-container");
+    this.#addClickListener(nodes, data);
 
+    //listener de boton create board
+    const createBtn = document.querySelector(".btn-create-board");
+    createBtn.addEventListener("click", function () {
+      const inputTextModal = new InputTextModal();
+      inputTextModal.newBoardModal(
+        "Nuevo tablero",
+        "Crear",
+        "Nombre del tablero"
+      );
+    });
 
-/*
+    /*
 ######################################################################
-  listeners de boton options
+  listeners de boton options (los tres puntos verticales)
 ######################################################################
 */
-        //dropdown show on hover y hide on out
-        const dropdowns = document.querySelectorAll(".dropdown")
-        const dropdownsLists = document.querySelectorAll(".dropdown-menu")
-        dropdowns.forEach((dropdown, index) => {
-            dropdown.addEventListener("mouseover", () => { 
-                dropdownsLists[index].classList.add("show");
-            })
-            
-            dropdown.addEventListener("mouseout", () => { 
-                dropdownsLists[index].classList.remove("show");
-            })
-        })
-        
-        const optionEliminar = document.querySelectorAll(".option-eliminar")
-        optionEliminar.forEach( (item) => {
-            item.addEventListener("click", (event) => {
-                const indexController = new IndexController()
-                const boardId = item.getAttribute("data-board-id")
-                event.stopPropagation()
+    //dropdown show on hover y hide on mouse out
+    const dropdowns = document.querySelectorAll(".dropdown");
+    const dropdownsLists = document.querySelectorAll(".dropdown-menu");
+    dropdowns.forEach((dropdown, index) => {
+      dropdown.addEventListener("mouseover", () => {
+        dropdownsLists[index].classList.add("show");
+      });
 
-                let ok = confirm("Seguro que desea eliminar talero?")
+      dropdown.addEventListener("mouseout", () => {
+        dropdownsLists[index].classList.remove("show");
+      });
+    });
 
-                if(ok){
-                    indexController.deleteBoard(boardId)
-                }
+    //accion click del boton eliminar del dropdown opciones
+    const optionEliminar = document.querySelectorAll(".option-eliminar");
+    optionEliminar.forEach((item) => {
+      item.addEventListener("click", (event) => {
+        const indexController = new IndexController();
+        const boardId = item.getAttribute("data-board-id");
+        event.stopPropagation();
 
-            })
-        })
-    
-        const optionCambiarNombre = document.querySelectorAll(".option-cambiar-nombre")
-        optionCambiarNombre.forEach( (item) => {
-            item.addEventListener("click", (event) => {
-                const inputTextModal = new InputTextModal();
-                const boardId = item.getAttribute("data-board-id")
-                event.stopPropagation()
-                inputTextModal.renameBoardModal("Renombrar tablero", "Modificar", "Nuevo nombre", boardId)
-                
-            })
-        })
+        let ok = confirm(
+          "La eliminacion no tiene reversa\n¿Seguro que desea eliminar tablero?"
+        );
 
-    }
+        if (ok) {
+          indexController.deleteBoard(boardId);
+        }
+      });
+    });
 
-    #addClickListener(node, data, nodeBody = this.#nodeBody){
-        Array.from(node).map(function(item,index){
-            item.addEventListener('click', function() {
-                const columnsController = new ColumnsController()
-                
-                //para leer el board actual desde vista columns
-                nodeBody.setAttribute("boardSelected", data[index].id)
-
-                //aqui se deben enviar todas las tareas para desestructurar
-                console.log("entre al listener y mando data[index]");
-                columnsController.init(data[index])
-            })
-        })
-    }
-
-    /**
-     * establecer el contenedor del modal
-     */
-    #setInputTextModal(){
+    //accion click del boton editar (nombre tablero) del dropdown opciones
+    const optionCambiarNombre = document.querySelectorAll(
+      ".option-cambiar-nombre"
+    );
+    optionCambiarNombre.forEach((item) => {
+      item.addEventListener("click", (event) => {
         const inputTextModal = new InputTextModal();
-        inputTextModal.init()
-    }
-/**
- * Crear el container donde iran los boards
- * @returns el nodo del container
- */
-    #createContainer() {
-        return document.createElement('div')
-    }
+        const boardId = item.getAttribute("data-board-id");
+        event.stopPropagation();
+        inputTextModal.renameBoardModal(
+          "Renombrar tablero",
+          "Modificar",
+          "Nuevo nombre",
+          boardId
+        );
+      });
+    });
+  }
 
-    #addTitleSection(){
-        return `
+  //listeners del los containers de los tableros
+  #addClickListener(node, data, nodeBody = this.#nodeBody) {
+    Array.from(node).map(function (item, index) {
+      item.addEventListener("click", function () {
+        const columnsController = new ColumnsController();
+
+        //para leer el board actual desde vista columns
+        nodeBody.setAttribute("boardSelected", data[index].id);
+
+        // y para saber cual del index en el objeto se selecciono
+        nodeBody.setAttribute("objBoardIndexSelected", index);
+
+        //aqui se deben enviar todas las tareas para desestructurar
+        columnsController.init(data[index]);
+      });
+    });
+  }
+
+  /**
+   * establecer el contenedor del modal
+   */
+  #setInputTextModal() {
+    const inputTextModal = new InputTextModal();
+    inputTextModal.init();
+  }
+  /**
+   * Crear el container donde iran los boards
+   * @returns el nodo del container
+   */
+  #createContainer() {
+    return document.createElement("div");
+  }
+
+  /**
+   * Metodo para estructurar el titulo del cuerpo del index
+   * @returns Contenido html del titulo
+   */
+  #addTitleSection() {
+    return `
         <div class="container ps-3">
             <h1 style="border-bottom: 1px solid #F7F7F7;width: fit-content;">Tableros</h1>
             <p class="fs-6" id="cantidad-total">Cantidad de tableros</p>
@@ -127,11 +152,15 @@ export class BoardsView {
     
     <div class="container justify-content-center all-boards d-flex flex-row flex-wrap align-content-between bd-highlight">
     </div>
-    `
-    }
+    `;
+  }
 
-    #addButtonInputText() {
-        return `
+/**
+ * Metodo para estructurar el contenido de el boton crear tablero
+ * @returns el contenido html del boton crear tablero
+ */
+  #addButtonCreateBoard() {
+    return `
         <button class="btn btn-create-board btn-ligth align-self-center mx-2" style=" height: auto;" type="button">
 
             crear tablero
@@ -142,15 +171,22 @@ export class BoardsView {
             <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
         </svg>
     </button>
-    `
-    }
+    `;
+  }
 
-    #addBoards(data) {
-        //agregar cantidad total de tableros a head
-        document.querySelector("#cantidad-total").innerHTML += ` <b>${data.length}</b>.`
-        return data.map( (item, index) => {
-            return `
-        <div id="container" class="board-container me-4 mb-5" data-index-node="${item.id}">
+  /**
+   * Metodo para estructurar el contenido de los tabletos del cuerpo de index
+   * @param {ApiModel} data (result api raw) 
+   * @returns El contenido html de todos  los tableros
+   */
+  #addBoards(data) {
+    //agregar cantidad total de tableros a head
+    document.querySelector(
+      "#cantidad-total"
+    ).innerHTML += ` <b>${data.length}</b>.`;
+    return data.map((item) => {
+      return `
+        <div id="container" class="board-container me-4 pb-5 " data-index-node="${item.id}">
             <div class="card" style="width: 18rem;">
                 <img src="./images/tempGalaxi.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -171,7 +207,7 @@ export class BoardsView {
                 </div>
             </div>
         </div>
-            `
-        })
-    }
+            `;
+    });
+  }
 }

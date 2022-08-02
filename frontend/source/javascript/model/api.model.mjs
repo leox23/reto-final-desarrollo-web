@@ -1,5 +1,8 @@
 'use strict'
 
+/**
+ * Clase modalo sencillo para recibir el resultado de la api
+ */
 export class ApiModel {
     #results;
 
