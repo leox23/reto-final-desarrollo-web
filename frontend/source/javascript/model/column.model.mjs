@@ -1,4 +1,8 @@
 'use strict';
+
+/**
+ * Clase para instanciar objetos tipo COlumnModel
+ */
 export class ColumnModel {
     id;
     name;
@@ -6,6 +10,7 @@ export class ColumnModel {
     updatedAt;
     tasks; //tareas pertenecientes a columna
 
+   //Atributos necesarios para la instanciacion de los objetos
     constructor(id, name, createdAt, updatedAt, tasks) {
         this.id = id;
         this.name = name;

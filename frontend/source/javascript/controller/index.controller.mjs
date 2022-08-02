@@ -12,6 +12,9 @@ import { ApiModel } from "../model/api.model.mjs";
 // Services
 import { BoardsService } from "../model/service/boards.service.mjs";
 
+/**
+ * Clase para ser intermediario de todo el control y estado de la vista index
+ */
 export class IndexController {
     #indexView;
     #fetchBoards;
@@ -36,15 +39,27 @@ export class IndexController {
         this.#indexView.init(data);
     }
 
+    /**
+     * Metodo para interactuar con el servicio de api de creacion
+     * @param {String} boardName Nombre del board a crear
+     */
     saveBoard(boardName) {
         //api crear nuevo board
         this.#fetchBoards.create(boardName)
     }
-
+/**
+ * Metodo para interactuar con el servicio de api de borrar board
+ * @param {Int} boardId El id del board a borrar
+ */
     deleteBoard(boardId){
         this.#fetchBoards.delete(boardId)
     }
 
+    /**
+     * Metodo para interactuar con el servicio de api de cambio de nombre de board
+     * @param {Int} boardId El id del board a cambiar nombre
+     * @param {String} newName Nuevo nombre del board
+     */
     update(boardId, newName){
         this.#fetchBoards.update(boardId, newName)
     }

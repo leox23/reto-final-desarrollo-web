@@ -8,6 +8,9 @@ import { BoardsService } from "../model/service/boards.service.mjs";
 import { ApiModel } from "../model/api.model.mjs";
 import { Header } from "../view/components/header.view.mjs";
 
+/**
+ * Clase para ser intermediario de todo el control y estado de la vista Controller
+ */
 export class ColumnsController {
   #apiModel;
 
