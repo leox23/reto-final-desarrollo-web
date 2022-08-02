@@ -2,6 +2,7 @@
 
 import { DetailsModal } from "./components/datails.modal.view.mjs";
 import { ColumnsController } from "../controller/colums.controller.mjs";
+import { IndexController } from "../controller/index.controller.mjs";
 
 export class ColumnsView {
   #container;
@@ -14,6 +15,13 @@ export class ColumnsView {
 
   async init (columns) {
     document.querySelector(".modal").remove();
+
+    //listener de logo de app para ir a index
+    const logo = document.querySelector("#goHome")
+    logo.addEventListener("click", () => {
+      const indexController = new IndexController();
+        indexController.init();
+    })
     
     //reconocer en que board estoy actualmente de la
     const nodeBody = document.querySelector("body")
@@ -30,9 +38,6 @@ export class ColumnsView {
     this.#listenerCreateTaskBtn()
 
     
-    
-
-
 /*
 ######################################################################
   Configuracion drag and drop
@@ -58,8 +63,6 @@ export class ColumnsView {
       task.addEventListener('dragend', () => {
         const bodyNode = document.querySelector("body")
         const taskId = bodyNode.getAttribute("dragged-task-id")
-        
-        const taskNode = document.getElementById(task.id)
 
         let parentTaskContainer = task.parentNode
 
@@ -136,7 +139,6 @@ export class ColumnsView {
     allTaskResolve.forEach((task) => {
       const bodyNode = document.querySelector("body")
       const actualBoard = bodyNode.getAttribute("boardselected")
-      console.log("🚀 ~ file: columns.view.mjs ~ line 60 ~ ColumnsView ~ allTaskResolve.forEach ~ task.board_id", task.board_id)
       if (task.board_id == actualBoard) {
         taskContainer = document.querySelector(`[data-task-id="${task.id}"]`);
 

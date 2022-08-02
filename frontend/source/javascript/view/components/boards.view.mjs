@@ -14,10 +14,6 @@ export class BoardsView {
     }
 
     init(data) {
-        // desesctructurando datos
-        console.log("data recibida");
-        console.log(data);
-
         //container de section
         const container = this.#createContainer()
         this.#nodeBody.append(container);
@@ -49,18 +45,7 @@ export class BoardsView {
 ######################################################################
   listeners de boton options
 ######################################################################
-*/      //click en boton opciones 
-/*      presenta bug, no logra ingonar click de contenedor 
-        const btnOption = document.querySelector(".btn-options")
-        const dropdownsLists = document.querySelectorAll(".dropdown-menu")
-        btnOption.forEach( (item,index) => {
-            item.addEventListener("click", (event) => {
-                event.stopPropagation()
-                dropdownsLists[index].classList.add("show");
-            })
-        })
 */
-
         //dropdown show on hover y hide on out
         const dropdowns = document.querySelectorAll(".dropdown")
         const dropdownsLists = document.querySelectorAll(".dropdown-menu")
@@ -80,8 +65,13 @@ export class BoardsView {
                 const indexController = new IndexController()
                 const boardId = item.getAttribute("data-board-id")
                 event.stopPropagation()
-                indexController.deleteBoard(boardId)
-                
+
+                let ok = confirm("Seguro que desea eliminar talero?")
+
+                if(ok){
+                    indexController.deleteBoard(boardId)
+                }
+
             })
         })
     
@@ -99,8 +89,6 @@ export class BoardsView {
     }
 
     #addClickListener(node, data, nodeBody = this.#nodeBody){
-        console.log("listener aplicado, tengo en data: ");
-        console.log(data);
         Array.from(node).map(function(item,index){
             item.addEventListener('click', function() {
                 const columnsController = new ColumnsController()
@@ -134,7 +122,7 @@ export class BoardsView {
         return `
         <div class="container ps-3">
             <h1 style="border-bottom: 1px solid #F7F7F7;width: fit-content;">Tableros</h1>
-            <p class="fs-6">Cantidad de tableros 1/1</p>
+            <p class="fs-6" id="cantidad-total">Cantidad de tableros</p>
         </div>
     
     <div class="container justify-content-center all-boards d-flex flex-row flex-wrap align-content-between bd-highlight">
@@ -158,6 +146,8 @@ export class BoardsView {
     }
 
     #addBoards(data) {
+        //agregar cantidad total de tableros a head
+        document.querySelector("#cantidad-total").innerHTML += ` <b>${data.length}</b>.`
         return data.map( (item, index) => {
             return `
         <div id="container" class="board-container me-4 mb-5" data-index-node="${item.id}">

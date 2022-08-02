@@ -46,6 +46,7 @@ export class DetailsModal {
 
     
     showDetailsModal(taskData, taskId){
+      console.log("🚀 ~ file: datails.modal.view.mjs ~ line 49 ~ DetailsModal ~ showDetailsModal ~ taskData", taskData)
       const modalContainer = document.querySelector('.modal')
       modalContainer.innerHTML = this.#updateDetailModalContent(taskData, taskId)
 
@@ -250,32 +251,48 @@ export class DetailsModal {
               
           </div>
           <!--log items-->
-          <div class="logs-container">
-              <!--lista de tareas-->
-              <div class="logs-items-container">
-                  <div class="log-item p-2 mb-1 border shadow-sm rounded">
-                      <p class="log-text m-0">
-                          avanze un poco en la tarea
-                      </p>
-                  </div>
-                  
-                  <div class="log-item p-2 mb-1 border shadow-sm rounded">
-                      <p class="log-text m-0">
-                          otras modificaciones en la tarea
-                      </p>
-                  </div>
-              </div>
-              </div>
+          <div class="logs-container" style="max-height:150px;overflow:auto;">
+              ${taskData.log_task_id ? this.#addtaskLogs(taskData.log_task_id).join("") : ""}
+          </div>
       </div>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
         <button type="button" data-task-id="${taskId}" class="btn btn-primary save-btn">Guardar</button>
-      </div>
-    </div>
-  </div>
-      `
+            </div>
+          </div>
+        </div>
+            `
+    }
+
+    #addtaskLogs(logs) {
+      console.log("🚀 ~ file: datails.modal.view.mjs ~ line 270 ~ DetailsModal ~ #addtaskLogs ~ logs", logs)    
+
+      let columnsArr = ["","(1)Por realizar", "(2)En progreso", "(3)Terminado"]
+      return logs.map((log, index) => {
+          if (logs.length == 1){
+            return `
+            <div class="log-item p-2 mb-1 border shadow-sm rounded">
+                <p class="log-text m-0">
+                    La tarea ha permanecido en ${columnsArr[log.current]}
+                </p>
+            </div>
+            `
+          } else if ( index == 0 ){
+            return ""
+          } else {
+            return `
+            <div class="log-item p-2 mb-1 border shadow-sm rounded">
+                <p class="log-text m-0">
+                    Tarea pasa de ${columnsArr[log.previous]} 
+                    a -> ${columnsArr[log.current]}
+                </p>
+            </div>
+            `
+          }
+      })
+
     }
 
 }

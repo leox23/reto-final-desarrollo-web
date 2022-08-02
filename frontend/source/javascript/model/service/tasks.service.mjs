@@ -59,10 +59,6 @@ export class TasksService {
   }
 
   deleteTask(taskId, taskContainer) {
-    console.log(
-      "🚀 ~ file: tasks.service.mjs ~ line 61 ~ TasksService ~ deleteTask ~ taskId",
-      taskId
-    );
     return fetch(`http://localhost:8080/api/v1/deleteTask/${taskId}`, {
       method: "DELETE",
     })

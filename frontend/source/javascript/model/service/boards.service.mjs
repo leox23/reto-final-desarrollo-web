@@ -47,6 +47,28 @@ export class BoardsService {
         .catch(err => console.error(err));
     }
 
+    
+
+    create(boardName){
+        return fetch("http://localhost:8080/api/v1/board/", {
+            method: 'POST',
+            body: JSON.stringify(
+                {
+                    "name": `${boardName}`
+                }
+            ),
+            headers: {
+                'Content-Type': 'application/json'                
+            }
+        })
+        .then((response) => {
+            console.log(response)
+            const indexController = new IndexController();
+            indexController.init()
+        })
+        .catch(err => console.error(err));
+    }
+
     changeTaskColumn(taskId, columnIndex){
         return fetch("http://localhost:8080/api/v1/board/", {
             method: 'POST',

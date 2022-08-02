@@ -1,6 +1,7 @@
 'use strict'
 
 import { BoardsView } from "./boards.view.mjs";
+import { IndexController } from "../../controller/index.controller.mjs";
 
 export class Header {
     #logoPath;
@@ -13,14 +14,6 @@ export class Header {
 
     init(){
         this.#body.innerHTML = this.#contentHeader()
-        this.#addClickListener('.logo-title-container')
-    }
-
-    #addClickListener(node){
-        document.querySelector(node).addEventListener('click', function(){
-            const boards = new BoardsView();
-            boards.init()
-        })
     }
 
     #contentHeader(){
@@ -30,13 +23,15 @@ export class Header {
         background: rgb(255,255,255);
     background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(102,255,102,0.3113620448179272) 100%);
     ">
-            <div href="alert(leo)" class="logo-title-container d-flex align-items-center">
+        <a id="goHome" href="http://127.0.0.1:5502/" style="text-decoration:none;"><div class="logo-title-container d-flex align-items-center" style="cursor:pointer;color:black;">
                 <img src=${this.#logoPath} style="
                 width:60px;
                 height:60px;" alt="Krello logo">
 
                 <h1 class="ms-3">Krello</h1>
-            </div>
+            </div> 
+        </a>
+            
         
         </div>
         `
