@@ -4,11 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ec3b89e8-e709-4ef0-b00b-075ae5a06c78" name="Changes" comment="ajustes" />
+    <list default="true" id="ec3b89e8-e709-4ef0-b00b-075ae5a06c78" name="Changes" comment="mergeando ramas">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/d/1d22886aa7201ada54216e0ec354350b9ffa23df" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/6/3669b8b1182e04dac67a31a75237d1a19a4f6393" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/6/368b6236dc9999cf1df60a4f02cf7d272c48e29b" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/f/7ffd71b714294722108ce969bb508f74d28b7868" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/7/e760e54003595f210b7645e4ad0f8f80371391ae" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/BoardDomain.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/BoardDomain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/ColumnDomain.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/ColumnDomain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/LogDomain.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/LogDomain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/TaskDomain.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/domain/TaskDomain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/sofka/mykrello/model/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/domain/LogDomain.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/domain/LogDomain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/service/TaskService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/org/sofka/mykrello/model/service/TaskService.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/jhon" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -57,28 +76,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
-    "spring.configuration.checksum": "340a7ff84788d2b06043a9fc7935588d"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;340a7ff84788d2b06043a9fc7935588d&quot;
   },
-  "keyToStringList": {
-    "ChangesTree.GroupingKeys": [
-      "module"
+  &quot;keyToStringList&quot;: {
+    &quot;ChangesTree.GroupingKeys&quot;: [
+      &quot;module&quot;
     ],
-    "DatabaseDriversLRU": [
-      "mysql"
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="MyKrelloApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="my-krello" />
@@ -101,6 +121,9 @@
       <workItem from="1659198887978" duration="5278000" />
       <workItem from="1659290828607" duration="4943000" />
       <workItem from="1659336063719" duration="643000" />
+      <workItem from="1659336752594" duration="1833000" />
+      <workItem from="1659384480641" duration="7179000" />
+      <workItem from="1659402492511" duration="3168000" />
     </task>
     <task id="LOCAL-00001" summary="creacion de task servicio y domain, creacion log servicio y domain">
       <created>1658975231967</created>
@@ -151,7 +174,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659336286558</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="mergeando ramas">
+      <created>1659337147724</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1659337147725</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,6 +206,7 @@
     <MESSAGE value="creacion de logs al mover una task terminado, proyecto funcionando" />
     <MESSAGE value="Documentacion de controladores y servicios" />
     <MESSAGE value="ajustes" />
-    <option name="LAST_COMMIT_MESSAGE" value="ajustes" />
+    <MESSAGE value="mergeando ramas" />
+    <option name="LAST_COMMIT_MESSAGE" value="mergeando ramas" />
   </component>
 </project>

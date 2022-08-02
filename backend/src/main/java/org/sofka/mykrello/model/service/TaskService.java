@@ -56,7 +56,6 @@ public class TaskService implements TaskServiceInterface {
      */
     @Override
     public TaskDomain create(TaskDomain task,Integer idboard) {
-        task.setColumID(1);
         task.setBoard_id(idboard);
         var log=new LogDomain();
         var newtask=taskRepository.save(task);
