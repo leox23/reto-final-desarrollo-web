@@ -64,4 +64,9 @@ public class TaskDomain implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, targetEntity = LogDomain.class, cascade = CascadeType.ALL, mappedBy = "task_id")
     @JsonManagedReference(value = "task_id")
     private List<LogDomain> log_task_id = new ArrayList<>();
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @JsonBackReference("tasksForBoard")
+    @JoinColumn(name = "brd_id_board", referencedColumnName = "brd_id", nullable = false, updatable = false, insertable = false)
+    private BoardDomain boardId;
 }

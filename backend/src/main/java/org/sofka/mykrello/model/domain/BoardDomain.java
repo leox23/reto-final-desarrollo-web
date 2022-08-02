@@ -55,4 +55,9 @@ public class BoardDomain implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, targetEntity = ColumnForBoardDomain.class, cascade = CascadeType.ALL, mappedBy = "board")
     @JsonManagedReference(value = "columnsForBoard")
     private List<ColumnForBoardDomain> columnsForBoard = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, targetEntity = TaskDomain.class, cascade = CascadeType.ALL, mappedBy = "boardId")
+    @JsonBackReference(value = "tasksForBoard")
+    private List<TaskDomain> tasksForBoard = new ArrayList<>();
 }
